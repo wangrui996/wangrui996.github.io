@@ -12,13 +12,14 @@
 
 ###  Medium 
 
-[0034.在排序数组中查找元素的第一个和最后一个位置](doc/leedcode题解/数组/easy/medium/0034.在排序数组中查找元素的第一个和最后一个位置.md)
+[medium](doc/leedcode题解/数组/medium/README.md)
 
 
 <p id="hard"></p>
 
 ### Hard
 
+[hard]](doc/leedcode题解/数组/hard/README.md)
 
 
 

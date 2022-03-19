@@ -2,11 +2,11 @@
 
 leedcode数组
 
-[Easy](#easy)
+[Easy](doc/leedcode题解/数组/easy/README.md)
 
-[Medium](#medium)
+[Medium](doc/leedcode题解/数组/medium/README.md)
 
-[Hard](#hard)
+[Hard](doc/leedcode题解/数组/hard/README.md)
 
 
 
