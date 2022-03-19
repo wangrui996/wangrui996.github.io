@@ -4,20 +4,9 @@
     - [C++基础](doc/基础知识/C++基础/README.md)
     - [操作系统](doc/基础知识/操作系统/README.md)
 
-
 - **leedcode**
 
 [leedcode](Doc/Prepare/README.md#校招准备)
-
-
-- **求学**  
-    - [研究生方向](doc/文档/致谢.md)
-    - [本科经历](doc/文档/致谢.md)
-
-
-- **关于我**
-
-[关于我](Doc/Other/ContactMe/ContactMe.md)
 
 
 - **其他**
