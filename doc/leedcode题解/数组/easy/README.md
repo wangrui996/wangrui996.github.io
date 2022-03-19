@@ -1,9 +1,11 @@
-<h1 align="center">操作系统基础知识</h1>
+<h1 align="center">数组 easy</h1>
 
 
-**操作系统基础知识**
+**数组 easy**
 
-- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[操作系统的启动](doc/基础知识/操作系统/基础知识/操作系统的启动.md)</font>  
-- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[操作系统接口](doc/基础知识/操作系统/基础知识/操作系统的接口.md)</font>
+- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0088.合并两个有序数组](doc/leedcode题解/数组/easy/0088.合并两个有序数组.md#0088.合并两个有序数组)</font>  
+- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0704.二分查找](doc/leedcode题解/数组/easy/0704.二分查找.md#0704.二分查找)</font>  
+
+
 
 
