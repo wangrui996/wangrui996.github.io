@@ -6,7 +6,7 @@
 
 - **leedcode**
 
-[leedcode笔记](doc/leedcode题解/README.md#leedcode题解)
+    - [leedcode笔记](doc/leedcode题解/README.md#leedcode题解)
 
 
 - **其他**
