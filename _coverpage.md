@@ -1,7 +1,9 @@
 ![icon](icon/cover128.ico)
 
 
-<p align="center" style="font-size:50px;color:black">王瑞的个人博客</p>
+<p align="center" style="font-size:50px;color:black">王瑞的个人博客</p>  
+
+- 个人博客，记录自己科研学习和生活中的点滴
 
 本站总访问量：<span id="busuanzi_value_site_pv"></span> 次
 </span>
