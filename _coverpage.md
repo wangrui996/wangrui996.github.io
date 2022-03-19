@@ -1,4 +1,4 @@
-![icon](icon/coverpage.ico)
+![icon](icon/cover128.ico)
 
 
 <p align="center" style="font-size:50px;color:black">王瑞的个人博客</p>
