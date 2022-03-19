@@ -11,5 +11,8 @@
 
 [开始阅读](README.md)  [GitHub](https://github.com/wangrui996)  
 
+<!-- 背景图片 -->
+<!--![](_media/bg.png)-->
+
 <!-- 背景色 -->
-<!--![color](#fff)-->
+![color](#2f4253)
