@@ -1,0 +1,156 @@
+# 剑指offer 03.数组中重复的数字  
+
+[力扣题目链接](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)  
+
+
+## 题目描述  
+
+找出数组中重复的数字。  
+
+
+在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。  
+
+
+**示例 1：**  
+
+    输入：
+    [2, 3, 1, 0, 2, 5, 3]
+    输出：2 或 3  
+
+**限制：**
+
+    2 <= n <= 100000  
+
+
+## 思路分析  
+
+* 1.想到的第一个方法是**排序**，因为排序后重复的数字肯定实是在一块的，之后遍历数组并将其与后一个元素比较，相等则直接返回  
+    * 时间复杂度： O(nlogn) 标准库的sort函数时间复杂度O(nlogn)  
+* 2.考虑用**哈希表**统计元素出现的次数，再遍历一次将出现次数大于1的元素返回 
+    * 时间复杂度： O(n)     
+    * 空间复杂度： O(n) 
+
+* 3.利用**哈希表查询**操作，每遍历到一个数组，判断哈希表中是否含有该元素，有的话就找了重复元素（至少含两个，后面还有没有我们不管），没有的话就插入到哈希表；  
+    * 时间复杂度： O(n)     
+    * 空间复杂度： O(n)
+
+* 4.有没有空间复杂度O(1)的做法？   
+    * 题目有个条件一直没用上，n个数字的范围是0~n-1，那就是说n个元素 如果没有重复的话，**数组下标i对应的元素值为i**；但是有重复元素，所以**索引**与**元素值**是一对多的关系，有的位置上没有元素，有的位置上有重复的元素； 想法是将每个元素放到它对应的位置i上，如果那个位置上已经有了相同元素的话就找到了重复元素，如果位置i上放的元素值不是i的话就交换下位置；    
+
+**算法流程：**    
+* （1）遍历数组nums,初始化i = 0 
+    * 若nums[i] == i; 这个元素的位置是和元素值对应的，不需要操作,i++；
+    * 若不对应，则判断是否需要交换： 若nums[nums[i]] == nums[i], 表示索引nums[i]处的元素（nums[nums[i]]）和索引i处的元素相等，找到了重复元素，返回nums[i]
+    * 否则(nums[nums[i]] != nums[i])，表示索引nums[i]处的元素不为nums[i]，交换nums[i]与nums[nums[i]]的值；（目的是让nums[i]位置的元素对应的值也为nums[i]）  
+* (2)遍历完数组还没有找到重复元素，返回-1  
+
+以示例1作为演示[2, 3, 1, 0, 2, 5, 3]:  
+    (1) i = 0，nums[0] != 0, 进而判断 nums[2] != nums[0],交换后数组为[1, 3, 2, 0, 2, 5, 3]
+    (2) i = 0, nums[0] != 0, 进而判断 nums[1] != nums[0],交换后数组为[3, 1, 2, 0, 2, 5, 3]
+    (3) i = 0, nums[0] != 0, 进而判断 nums[3] != nums[0],交换后数组为[0, 1, 2, 3, 2, 5, 3]
+    (4) i = 0, nums[0] == 0, i++; 
+    (5) i为1,2,3时都是直接执行i++操作  
+    (6) i = 4, nums[4] != 4, 进而判断 nums[2] == nums[4],索引2与4位置元素相等，返回nums[2](或nums[4])  
+
+**复杂度分析**
+    * 时间复杂度： O(n)，遍历数组O(n), 内部的判断与交换操作都是O(1),因此时间复杂度是O(n)   
+    * 空间复杂度： O(1) 
+
+
+
+
+## 方法1 排序  
+
+```cpp
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        //数组排序后重复数字一定是在一起的
+        sort(nums.begin(), nums.end());
+        for(int i = 1; i < nums.size(); i++)
+        {
+            if(nums[i] == nums[i-1])
+            {
+                return nums[i];
+            }
+        }
+        return -1;
+    }
+};
+```  
+
+## 方法2 哈希表统计次数     
+
+```cpp
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int n = nums.size();
+        unordered_map<int, int> hashmap;
+        for(int i = 0; i < nums.size(); i++)
+        {
+           hashmap[nums[i]]++;
+        }
+        for(int tmp : nums)
+        {
+            if(hashmap[tmp] > 1) 
+                return tmp;
+        }
+        return -1;
+    }
+};
+```  
+
+## 方法3 哈希表直接判断   
+
+```cpp
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int n = nums.size();
+        unordered_set<int> hashset;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if(hashset.count(nums[i]))
+                return nums[i];
+            else 
+                hashset.insert(nums[i]); 
+        }
+        return -1;
+    }
+};
+``` 
+
+## 方法4 原地交换  
+
+```cpp
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int n = nums.size();
+        int ans;
+        for(int i = 0; i < n; ++i)
+        {
+            if(nums[i] == i) 
+                continue;
+            else
+            {
+                if(nums[nums[i]] != nums[i])
+                {
+                    swap(nums[nums[i]], nums[i]);
+                    i--;
+                }
+                else
+                    return nums[i];
+            }
+        }
+        return -1;
+    }
+};
+```  
+
+
+
+
+
+
