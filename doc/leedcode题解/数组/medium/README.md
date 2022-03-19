@@ -3,7 +3,7 @@
 
 **数组 hard**
 
-- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[操作系统的启动](doc/基础知识/操作系统/基础知识/操作系统的启动.md)</font>  
-- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[操作系统接口](doc/基础知识/操作系统/基础知识/操作系统的接口.md)</font>
+- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[操作系统的启动](doc/leedcode题解/数组/medium/0034.在排序数组中查找元素的第一个和最后一个位置.md)</font>  
+
 
 

@@ -33,7 +33,7 @@
             // 最大支持渲染的标题层级
             maxLevel: 5,
             // 自定义侧边栏后默认不会再生成目录，设置生成目录的最大层级（建议配置为2-4）
-            subMaxLevel: 4,
+            subMaxLevel: 6,
             // 小屏设备下合并导航栏到侧边栏
             mergeNavbar: true,
         }
@@ -51,7 +51,7 @@
                     '/': 'Type to search'
                 },
                 noData: '找不到结果',
-                depth: 4,
+                depth: 6,
                 hideOtherSidebarContent: false,
                 namespace: 'Docsify-Guide',
             }
@@ -104,7 +104,7 @@
 
     
     <!-- 引入 gitalk留言功能 -->
-	<link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+	<!--<link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
 	<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
 	<script src="//unpkg.com/docsify/lib/plugins/gitalk.min.js"></script>
 	<script>
@@ -116,7 +116,7 @@
     		admin: ['XXXXX'], // 如果仓库有多个人可以操作，那么在这里以数组形式写出
     		id: location.pathname, // 用于标记评论是哪个页面的
   		})
-	</script>
+	</script>-->
 	
 	
     
@@ -142,6 +142,7 @@
 
     <!-- 添加页脚 -->
     <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/docsify-footer-enh.min.js"></script>
+    
     <!-- 添加网站运行时间统计 -->
   	<script language=javascript>
     	function siteTime() {
@@ -166,7 +167,7 @@
        		minutes - 0-59之间的整数，做为date对象的分钟数
        		seconds - 0-59之间的整数，做为date对象的秒数
        		microseconds - 0-999之间的整数，做为date对象的毫秒数 */
-       		var t1 = Date.UTC(2022, 03, 19, 00, 00, 00); //北京时间2021-05-20
+       		var t1 = Date.UTC(2022, 03, 19, 00, 00, 00); //北京时间2022-03-19
        		var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
        		var diff = t2 - t1;
        		var diffYears = Math.floor(diff / years);
