@@ -11,7 +11,8 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <!-- 默认主题 -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+    <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wangrui996/wangrui99.github.io@master/plugin/css/me.css">
 </head>
 
 <body>
@@ -67,24 +68,60 @@
     <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
     <!-- 搜索功能支持 -->
     <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+    
+    
+    
+    <!--代码块相关-->
     <!--在所有的代码块上添加一个简单的Click to copy按钮来允许用户从你的文档中轻易地复制代码-->
     <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
     
-
-
+    <!--代码块背景-->
+    p code{
+        background-color: rgb(255, 255, 255) !important;
+      }
+  
+    .markdown-section p.tip,
+    .markdown-section tr:nth-child(1n) {
+    font-size: 16px !important;
+    }
+  
+    .markdown-section h1 {
+    margin: 3rem 0 2rem 0;
+    }
+  
+    .markdown-section h2 {
+    margin: 2rem 0 1rem;
+    }
+    img,
+    pre {
+    border-radius: 5px;
+    }
     <!-- 额外的代码高亮支持 -->
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-c.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-cpp.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-shell-session.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-http.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-c.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-cpp.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-docker.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-json.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-latex.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-bash.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-markdown.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/prism-yaml.js"></script>
+   
     <!-- 主题 -->
     <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/buble.css">-->
     <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/dark.css">-->
     <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/pure.css">-->
+    
+
+    <!-- 复制提醒 -->
+    <script src="https://cdn.jsdelivr.net/gh/wugenqiang/NoteBook@master/plugin/sweetalert.min.js"></script>
+    <script>
+        document.body.oncopy = function () {
+        swal("复制成功 🎉",
+                "若要转载或引用请务必保留原文链接，并申明来源  by 王瑞的个人博客",
+                "success"); };
+    </script>
 
     
     <!-- 引入 gitalk留言功能 -->
@@ -123,6 +160,9 @@
     <!-- mouse click -->
   	<script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/click_heart.js"></script>
     
+
+    <!-- 添加页脚 -->
+    <script src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/docsify-footer-enh.min.js"></script>
     <!-- 添加网站运行时间统计 -->
   	<script language=javascript>
     	function siteTime() {
@@ -162,8 +202,6 @@
     
     <!-- 访问量统计-->
     <script async src="https://cdn.jsdelivr.net/gh/wangrui996/wangrui996.github.io@master/plugin/js/busuanzi.pure.mini.js"></script>
-    
-    
     
    
 </body>
