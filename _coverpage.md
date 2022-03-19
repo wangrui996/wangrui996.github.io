@@ -1,9 +1,14 @@
  
 
-![icon](https://user-images.githubusercontent.com/58176267/159104005-c4c5744b-dfb0-446e-9bf1-a08c6c133ac9.png)
+![icon]()
 
 
-[开始阅读](README.md)  
+<p align="center" style="font-size:50px;color:black">王瑞的个人博客</p>
+
+本站总访问量：<span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+[开始阅读](README.md)  [GitHub](https://github.com/wangrui996)  
 
 <!-- 背景色 -->
-![color](#fff)
+<!--![color](#fff)-->
