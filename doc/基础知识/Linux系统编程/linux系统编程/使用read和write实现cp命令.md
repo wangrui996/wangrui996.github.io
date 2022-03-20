@@ -1,86 +1,93 @@
-# open & close 函数 
+<p id="使用read和write实现cp命令"></p>
 
-使用linux程序员手册 即man手册查看函数介绍  
+# 使用read和write实现cp命令 
 
 
-# open  
+## read
 
-man 2 open 查看  
-
-open函数 ：打开或创建一个文件/设备  
-
-linux提供的函数原型有两种  
-
-```c
-int open(const char *pathname, int flags);
-int open(const char *pathname, int flags, mode_t mode);
+终端查看read函数  
+```shell
+man 2 read
 ```
 
+read函数：从一个文件描述符读数据，保存在缓冲区
 
-## 第一个函数原型  
 
+**函数原型**
 ```c
-int open(const char *pathname, int flags);
+ssize_t read(int fd, void *buf, size_t count);
 ```
 
 ### 参数  
 
-* pathname ： 要打开的文件路径  
-* flags参数 ：查看手册发现有以下三种参数  O_RDONLY, O_WRONLY, or O_RDWR
+* fd ： 文件描述符  
+* buf ：缓冲区
+* count ：**缓冲区大小**
 
-* **返回值： file descriptor  文件描述符  实际上是一个整数** or -1 (错误就返回-1并设置。。。。)
+返回值 ： ssize_t  一个有符号的size_t  
+* 成功 ：返回实际读到的字节数(**已经到达文件末尾会读到0个字符，返回值是0**)  
+* 失败 ：返回-1.并设置errno  
 
+**注意** 注意read函数返回值为0说明读到了文件末尾  
+
+## write
+
+终端查看write函数  
 ```shell
-RETURN VALUE
-       open(), openat(), and creat() return the new file descriptor, or -1  if
-       an error occurred (in which case, errno is set appropriately).
-
+man 2 write
 ```
 
-## 第二个函数原型  
+write函数 ：打开或创建一个文件/设备  
+
+
+**函数原型**
+```c
+ssize_t write(int fd, const void *buf, size_t count);
+```
+
+### 参数  
+
+* fd ： 文件描述符  
+* buf ：缓冲区  注意参数中是个const，避免向fd写数据时误修改缓冲区内容
+* count ：**实际要写出的数据大小**，缓冲区大小是可能大于要写出的数据的
+
+返回值 ：  
+* 成功 ：实际写入的字节数  
+* 失败 ：返回-1.并设置errno 
+
+
+
+## 实现cp函数  
 
 ```c
-int open(const char *pathname, int flags, mode_t mode);
+#include <unistd>
+int main(int argc, char** argv)
+{
+	char buf[1024];
+
+	int n = 0;
+
+	int fd1 = open(argv[1], O_RDONLY); //读源文件
+
+	//要写入的目标文件，如果文件不存在先创建,如果已经存在就截断为0  注意要创建的话就要指定权限
+	int fd2 = open(argv[2], O_RDWR | O_CREAT | O_TRUNC, 0664);  
+
+	//缓冲区大小有限，但我们不知道源文件内容有多大因此需要while循环
+	whlie( (n = read(rd1, buf, 1024)) != 0) {
+		write(fd2, buf, n);
+	}
+	//!对应open要注意close
+	close(fd1);
+	close(fd2); 
+
+	return 0;
+}
 ```
 
-* mode_t mode ： mode_t是一个8进制整形（以0开头） 如 0664  会给文件加权限  文件在创建的时候可能需要
-
-* 创建文件时。指定文件访问权限  
-	* 权限同时受umask影响，默认值可以通过 当前目录下umask查看，第一个0表示八进制  
-	* 如下面，umask为022 则权限应该是 755（rwxr-xr-x）
-```shell
-wr@wr:~/linux系统编程/open$ umask
-0022
-```
-
-
-### flag参数  
-
-完整的flag参数在手册中也给出了，包括  
-* O_APPEND 追加  
-* O_CREAT 创建
-* O_EXCL 是否存在  
-* O_TRUNC 截断  
-* O_NONBLOCK 非阻塞  
 
 
 
-# close  
 
-关闭一个文件描述符  
-
-函数原型  
-
-```c 
-int close(int fd);
-```
-参数  
-* fd：文件描述符
-
-返回值  
-
-* 0 成功
-* -1 失败  
 
 
 ### open函数 demo  
