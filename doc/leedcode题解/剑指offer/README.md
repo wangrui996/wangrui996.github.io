@@ -19,7 +19,7 @@
 
 ## Hard
 
-[hard]](doc/leedcode题解/剑指offer/hard/README.md)   
+[hard](doc/leedcode题解/剑指offer/hard/README.md)   
 
 
 
