@@ -19,7 +19,7 @@
 
 ## Hard
 
-[hard]](doc/leedcode题解/动态规划/hard/README.md)
+[hard](doc/leedcode题解/动态规划/hard/README.md)
 
 今天开始系统学习一下动态规划  
 

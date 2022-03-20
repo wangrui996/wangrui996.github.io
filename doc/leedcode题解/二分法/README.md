@@ -19,7 +19,7 @@
 
 ## Hard
 
-[hard]](doc/leedcode题解/二分法/hard/README.md)   
+[hard](doc/leedcode题解/二分法/hard/README.md)   
 
 
 

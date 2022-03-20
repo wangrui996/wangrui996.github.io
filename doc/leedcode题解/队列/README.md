@@ -19,6 +19,6 @@
 
 ## Hard
 
-[hard]](doc/leedcode题解/队列/hard/README.md)
+[hard](doc/leedcode题解/队列/hard/README.md)
 
 
