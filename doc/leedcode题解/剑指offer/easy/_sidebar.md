@@ -21,7 +21,7 @@
 - [0052.两个链表的第一个公共节点](doc/leedcode题解/剑指offer/easy/0052.两个链表的第一个公共节点.md#两个链表的第一个公共节点)
 - [0053-I.在排序数组中查找数字I](doc/leedcode题解/剑指offer/easy/0053-I.在排序数组中查找数字Imd#在排序数组中查找数字I)
 - [0053-II.0～n-1中缺失的数字](doc/leedcode题解/剑指offer/easy/0053-II.0～n-1中缺失的数字.md#缺失的数字)
-- [0054.二叉搜索树的第k大节点符](doc/leedcode题解/剑指offer/easy/0054.二叉搜索树的第k大节点.md二叉搜索树的第k大节点)
+- [0054.二叉搜索树的第k大节点](doc/leedcode题解/剑指offer/easy/0054.二叉搜索树的第k大节点.md#二叉搜索树的第k大节点)
 - [0055-I.二叉树的深度](doc/leedcode题解/剑指offer/easy/0055-I.二叉树的深度.md#二叉树的深度)
 - [0055-II.平衡二叉树](doc/leedcode题解/剑指offer/easy/0055-II.平衡二叉树.md#平衡二叉树)
 - [0057.和为s的两个数字](doc/leedcode题解/剑指offer/easy/0057.和为s的两个数字.md#和为s的两个数字)
