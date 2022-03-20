@@ -1,4 +1,29 @@
-# 二分法  
+<h1 align="center">leedcode笔记之二分法</h1>
+
+<p id="easy"></p>
+
+## Easy
+
+[easy](doc/leedcode题解/二分法/easy/README.md)
+
+
+<p id="medium"></p>
+
+
+##  Medium 
+
+[medium](doc/leedcode题解/二分法/medium/README.md)
+
+
+<p id="hard"></p>
+
+## Hard
+
+[hard]](doc/leedcode题解/二分法/hard/README.md)   
+
+
+
+## 二分法  
 
 可以先看一下这个题解，讲解了二分法的基本思路和注意事项，尤其要思考关于区间的选择，循环终止条件，对比较结果中三种情况的处理
 [leedcode题解]（https://leetcode-cn.com/problems/binary-search/solution/er-fen-cha-zhao-xiang-jie-by-labuladong/)
@@ -254,7 +279,6 @@ public:
     }
 };
 ```
-
 
 
 
