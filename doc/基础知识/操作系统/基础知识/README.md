@@ -1,9 +1,7 @@
-<h1 align="center">操作系统基础知识</h1>
+# README  
 
+[哈工大操作系统实验手册](https://hoverwinter.gitbooks.io/hit-oslab-manual/content/)  
 
-**操作系统基础知识**
+[哈工大操作系统实验GITHUB代码]https://github.com/wangrui996/HIT-OSLab
 
-- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[操作系统的启动](doc/基础知识/操作系统/基础知识/操作系统的启动.md)</font>  
-- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[操作系统接口](doc/基础知识/操作系统/基础知识/操作系统的接口.md)</font>
-
-
+https://www.lanqiao.cn/courses/115
