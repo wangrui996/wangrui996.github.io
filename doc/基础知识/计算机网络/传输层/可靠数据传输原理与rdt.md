@@ -269,6 +269,8 @@ rdt2.x假设信道可能发生错误但不会发生丢失分组等情况 ，校�
 
 * 假设ACK很小所以回来的时候用了一条细线，所以ACK到达的时间是RTT+L/R
 
+* **性能差的本质是因为停等协议引起的**
+
 ![image](https://user-images.githubusercontent.com/58176267/159162323-31ae1632-98bd-48a4-9453-7ade833e1b6a.png)
 
 
