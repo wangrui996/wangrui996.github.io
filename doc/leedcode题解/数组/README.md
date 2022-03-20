@@ -1,4 +1,4 @@
-<h1 align="center">精选力扣300+题目之数组</h1>
+<h1 align="center">leedcode笔记之数组</h1>
 
 <p id="easy"></p>
 
