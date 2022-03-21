@@ -124,7 +124,7 @@ int main(int argc, char** argv)
 
 	int fd1 = open(argv[1], O_RDONLY); //读源文件
 	
-	if(fd1 == -1) {
+	if(fd1 < 0) {
 		perror("open argv1 error");
 		exit(1);
 	}
@@ -132,7 +132,7 @@ int main(int argc, char** argv)
 	//要写入的目标文件，如果文件不存在先创建,如果已经存在就截断为0  注意要创建的话就要指定权限
 	int fd2 = open(argv[2], O_RDWR | O_CREAT | O_TRUNC, 0664);
 	
-    if(fd2 == -1) {
+    if(fd2 < 0) {
 		perror("open argv2 error");
 		exit(1);
 	}
