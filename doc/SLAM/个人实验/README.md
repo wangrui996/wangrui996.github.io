@@ -12,53 +12,22 @@
 
 * 重新下载vison_opencv，我选择了是tags 1.13.0  
 
-* 编译安装
 
-cv_bridge 修改CMakeLists.txt  
-```cmake
-set(OpenCV_DIR "/usr/local/opencv455/lib/cmake/opencv4")
-find_package(OpenCV 4.5.5 REQUIRED
-  COMPONENTS
-    opencv_core
-    opencv_imgproc
-    opencv_imgcodecs
-  CONFIG
-)
-```  
+## 使用opencv4.5.5编译cv_bridge!  
+
+编译前需要修改的地方
+https://github.com/ros-perception/vision_opencv/issues/272
+
+
+按上面修改完后，编译安装
+ 
 注意这里为了区分之前的cv_bridge341 重新安装一个目录
 ```shell
 cmake -D CMAKE_INSTALL_PREFIX=/usr/local/cv_bridge455 ..
 make -j16
 sudo make install
 ```
-* 修改配置文件  
 
-```shell
-sudo gedit /usr/local/cv_bridge455/share/cv_bridge/cmake/cv_bridgeConfig.cmake
-```
-```html
-#if(NOT "include;/usr/local/include;/usr/local/include/opencv " STREQUAL " ")
-if(NOT "/usr/local/opencv455/include/opencv4 " STREQUAL " ")
-  set(cv_bridge_INCLUDE_DIRS "")
-  set(_include_dirs "/usr/local/opencv455/include/opencv4")
-
-set(libraries "cv_bridge;/usr/local/opencv455/lib/libopencv_core.so.4.5.5;/usr/local/opencv455/lib/libopencv_imgproc.so.4.5.5;/usr/local/opencv455/lib/libopencv_imgcodecs.so.4.5.5")
-```
-```shell
-sudo gedit cv_bridge-extras.cmake
-``` 
-```shell
-set(OpenCV_VERSION 4.5.5)
-set(OpenCV_VERSION_MAJOR 4)
-set(OpenCV_VERSION_MINOR 5)
-set(OpenCV_VERSION_PATCH 5)
-set(OpenCV_SHARED ON)
-set(OpenCV_CONFIG_PATH /usr/local/opencv455/lib/cmake/opencv4)
-set(OpenCV_INSTALL_PATH /usr/local/opencv455/include/opencv4)
-set(OpenCV_LIB_COMPONENTS opencv_calib3d;opencv_core;opencv_cudaarithm;opencv_cudabgsegm;opencv_cudacodec;opencv_cudafeatures2d;opencv_cudafilters;opencv_cudaimgproc;opencv_cudalegacy;opencv_cudaobjdetect;opencv_cudaoptflow;opencv_cudastereo;opencv_cudawarping;opencv_cudev;opencv_dnn;opencv_features2d;opencv_flann;opencv_highgui;opencv_imgcodecs;opencv_imgproc;opencv_ml;opencv_objdetect;opencv_photo;opencv_shape;opencv_stitching;opencv_superres;opencv_video;opencv_videoio;opencv_videostab;opencv_viz;opencv_aruco;opencv_bgsegm;opencv_bioinspired;opencv_ccalib;opencv_cvv;opencv_datasets;opencv_dnn_objdetect;opencv_dpm;opencv_face;opencv_freetype;opencv_fuzzy;opencv_hdf;opencv_hfs;opencv_img_hash;opencv_line_descriptor;opencv_optflow;opencv_phase_unwrapping;opencv_plot;opencv_reg;opencv_rgbd;opencv_saliency;opencv_sfm;opencv_stereo;opencv_structured_light;opencv_surface_matching;opencv_text;opencv_tracking;opencv_xfeatures2d;opencv_ximgproc;opencv_xobjdetect;opencv_xphoto)
-set(OpenCV_USE_MANGLED_PATHS FALSE)
-set(OpenCV_MODULES_SUFFIX )
-```
 
 
 
