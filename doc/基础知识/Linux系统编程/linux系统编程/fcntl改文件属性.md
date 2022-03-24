@@ -236,7 +236,7 @@ buf为传出参数，看下手册可以知道buf这个结构体的内容，基�
 
 * 一个文件权限是16位 下面是位图
 
-![image](https://user-images.githubusercontent.com/58176267/159963931-7f01fcfe-424f-492f-bc4c-d3dbff02b0c4.png)
+![image](https://user-images.githubusercontent.com/58176267/159963931-7f01fcfe-424f-492f-bc4c-d3dbff02b0c4.png)  
 
 
 
