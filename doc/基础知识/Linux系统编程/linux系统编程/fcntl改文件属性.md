@@ -182,3 +182,61 @@ int main(void)
 
 ![image](https://user-images.githubusercontent.com/58176267/159955526-d0ed475c-085b-4d45-bdb7-4d228b65f315.png)
 
+
+
+## stat函数————获取文件属性
+
+获取文件属性 （从inode结构体获取）
+
+**函数原型**
+```c
+int stat(const char *path, struct stat *buf)
+```
+
+* 头文件 #include <sys/stat.h>
+
+* 参数
+    * path： 文件路径
+    * buf：（传出参数） 存放文件属性，inode 结构体指针
+
+* 返回值：
+    * 成功： 0
+    * 失败： -1 errno
+
+buf为传出参数，看下手册可以知道buf这个结构体的内容，基本就是使用ll查看到的那些信息
+ 
+* 获取文件大小： buf.st_size  这是获取文件大小的标准方法(前面还通过lseek 函数实现了)
+* 获取文件类型： buf.st_mode   可以作为不同宏函数的参数，具体可看手册
+* 获取文件权限： 也是用buf.st_mode
+* 磁盘块        buf.st_blocks   （磁盘中一个扇区512B，如果文件大小为100B，磁盘块为1）
+* 符号穿透：    stat 会     lstat 不会
+
+### demo  
+
+![image](https://user-images.githubusercontent.com/58176267/159960528-78864100-22b9-47ae-a2bc-f9154c91daf1.png)
+
+
+### st_mode属性 使用stat查看文件类型  
+
+根据传入的参数，打印这个文件是什么类型，可以是目录，普通文件，管道文件等.....
+
+![image](https://user-images.githubusercontent.com/58176267/159961674-0c365b2d-4b7d-46f6-98b6-7d78c7b3bfc3.png)
+
+
+##### 符号穿透  stat与lstat
+
+使用上面的程序，如果参数是一个符号连接(指向某个文件或目录)，使用stat函数，会拿到符号链接指向的那个文件或目录的属性  
+
+这种现象称为stat穿透，是可以穿透符号链接的  
+
+使用lstat 函数则不会穿透符号  
+
+### 补充：
+* ls -l 不会穿透符号链接  显示的是符号链接的属性   cat 会穿透符号链接  显示的是符号链接指向的内容  同理，vim也会穿透符号链接
+
+* 一个文件权限是16位 下面是位图
+
+![image](https://user-images.githubusercontent.com/58176267/159963931-7f01fcfe-424f-492f-bc4c-d3dbff02b0c4.png)
+
+
+
