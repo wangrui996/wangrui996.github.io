@@ -35,7 +35,52 @@ nextseqnum: 滑窗内可用的序列号最小的那个  所以接下来如果要
 
 #### GBN发送方扩展(包含了变量)的FSM  
 
-* 初始时 base(上图中的send_base) = 1   nextseqnum = 1 （nextseqnum表示滑窗内新发送分组时可用的起始序列号）
+* 初始时 base(上图中的send_base) = 1  （base表示滑窗中最小的序列号） nextseqnum = 1 （nextseqnum表示滑窗内新发送分组时可用的起始序列号）
+
+* 上层应用需要发送数据时 ,发送方：
+    * 如果nextseqnum < base + N  表示滑窗内还有可用序列号  利用该序列号制作一个分组，调用udt_send发出去 并判断 
+        * 如果base == nextseqnum 启动定时器   nextseqnum++   实际上就是刚开始滑窗时启动定时器？  
+    * 如果nextseqnum >= base + N 也就是滑窗内没有可用的序列号了，refuse_data（data）  
+
+    * 进入wait状态等待新事件
+
+* 如果发生了timeout事件
+    * 重启timer 
+    * 将nextseqnum之前（base为起始位置）的分组都重发一次   (GBN设计的)
+
+* 如果收到ACK 
+    * 因为GBN的确认采用累积确认， 将ACK中的序列号取出后 + 1然后赋值给base (因为取出的值表示在这个序列号之前的(包括这个序列号)都已经确认了，所以base位置移动到这个序列号 + 1位置)  
+    * 所谓的窗口滑动，实际上就体现在这里，base移动了，窗口大小还是N，相当于窗口滑动了  
+    * 判断base == nextseqnum
+        *  base == nextseqnum 停止定时器   这种情况表示已经发送的分组都被正确接收了，  停止定时器后，如果再收到上层应用发送数据的时间，会重新启动
+        *  否则，重新开始计时器，还有消息没有被确认(base到nextseqnum之间的分组)  但已经收到了一次ACK，所以之前定时器的定时应该清零，重新开始定时并等待ACK  
+
+
+
+#### GBN接收方扩展FSM  
+
+接收方没有缓存
+
+* 维持一个变量expectedseqnum : 当前期望收到的序列号
+
+* 收到一个分组，分组没坏，并且序列号是它所期望的(理想情况)
+    * 向上层交付数据
+    * 发送ACK，其中的序列号为expectedseqnum
+    * 将期望收到的分组序列号expectedseqnum++ 
+    * 这里也是能体现接收方是没有缓存的 
+
+* ACK机制 ： 发送拥有最高序列号的、已被正确接收的分组的ACK  
+    * 可能产生重复的ACK
+    * 只需要记住唯一的expectedseqnum  
+
+* 乱序到达的分组
+    * 停等协议中，发一个等发一个等，乱序情况出现的较少 但流水线机制中乱序可能比较多，比如可能接收到期望分组是5, 但收到了7 此时GBN处理是直接丢弃
+    * **已经收到的但不是我期望的分组：直接丢弃————>接收方没有缓存**  
+    * 重新序列号最大的、按序到达的分组  
+    * 如期望的是5，收到的7，会丢弃7这个分组，恢复ACK中的序列号为4，表示4及以前的都收到了  
+
+![image](https://user-images.githubusercontent.com/58176267/160116575-af3cb4bf-742c-44f2-acfa-311f0f471377.png)
+
 
 
 ![image](https://user-images.githubusercontent.com/58176267/160113849-a53ef0a9-9ea9-4dee-9bf0-9b7f580b331e.png)
