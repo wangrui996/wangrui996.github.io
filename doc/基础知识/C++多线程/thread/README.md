@@ -2,7 +2,7 @@
 ## thread  
 
 
-[thread官方说明-cplusplus]https://www.cplusplus.com/reference/thread/thread/?kw=thread
+[thread官方说明-cplusplus](https://www.cplusplus.com/reference/thread/thread/?kw=thread)
 
 
 ## 定义、加入线程
