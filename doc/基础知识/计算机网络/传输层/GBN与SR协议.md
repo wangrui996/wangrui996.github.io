@@ -35,6 +35,9 @@ nextseqnum: 滑窗内可用的序列号最小的那个  所以接下来如果要
 
 #### GBN发送方扩展(包含了变量)的FSM  
 
+
+![image](https://user-images.githubusercontent.com/58176267/160113849-a53ef0a9-9ea9-4dee-9bf0-9b7f580b331e.png)
+
 * 初始时 base(上图中的send_base) = 1  （base表示滑窗中最小的序列号） nextseqnum = 1 （nextseqnum表示滑窗内新发送分组时可用的起始序列号）
 
 * 上层应用需要发送数据时 ,发送方：
@@ -79,11 +82,10 @@ nextseqnum: 滑窗内可用的序列号最小的那个  所以接下来如果要
     * 重新序列号最大的、按序到达的分组  
     * 如期望的是5，收到的7，会丢弃7这个分组，恢复ACK中的序列号为4，表示4及以前的都收到了  
 
-![image](https://user-images.githubusercontent.com/58176267/160116575-af3cb4bf-742c-44f2-acfa-311f0f471377.png)
+![image](https://user-images.githubusercontent.com/58176267/160117660-8615d90e-1206-4778-8a10-ff5f66bead61.png)
 
 
 
-![image](https://user-images.githubusercontent.com/58176267/160113849-a53ef0a9-9ea9-4dee-9bf0-9b7f580b331e.png)
 
 
 
