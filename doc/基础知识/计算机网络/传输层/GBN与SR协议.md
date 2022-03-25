@@ -95,6 +95,13 @@ nextseqnum: 滑窗内可用的序列号最小的那个  所以接下来如果要
 * 发送方收到ACK0，向前滑动，发送pkt4    收到ACK1，发送pkt5  
 * 某一时刻，分组2的定时器发生timeout事件，会重发 pkt2到pkt5的所有分组  
 
+![image](https://user-images.githubusercontent.com/58176267/160118732-4ca88349-845d-4ac6-bd34-bf169cf1d4b3.png)
+
+
+### 练习题  
+
+
+![image](https://user-images.githubusercontent.com/58176267/160118823-4ee25cf0-42f4-4312-9b76-577de0cbf77f.png)
 
 
 
