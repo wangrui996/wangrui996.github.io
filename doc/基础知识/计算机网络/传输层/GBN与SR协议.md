@@ -100,6 +100,7 @@ nextseqnum: 滑窗内可用的序列号最小的那个  所以接下来如果要
 
 ### 练习题  
 
+该情况下，发送方的base = 4  nextseqnum = 8  发生超时事件，则会重传滑窗内nextseqnum之前的所有数据(base就是滑窗起始位置)
 
 ![image](https://user-images.githubusercontent.com/58176267/160118823-4ee25cf0-42f4-4312-9b76-577de0cbf77f.png)
 
