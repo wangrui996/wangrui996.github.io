@@ -9,6 +9,7 @@
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0104.二叉树的最大深度](doc/leedcode题解/二叉树/easy/0104.二叉树的最大深度.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0110.平衡二叉树](doc/leedcode题解/二叉树/easy/0110.平衡二叉树.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0111.二叉树的最小深度](doc/leedcode题解/二叉树/easy/0111.二叉树的最小深度.md)</font> 
+- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0112.路径总和](doc/leedcode题解/二叉树/easy/0112.路径总和.md)</font>
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0144.二叉树的前序遍历](doc/leedcode题解/二叉树/easy/0144.二叉树的前序遍历.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0145.二叉树的后序遍历](doc/leedcode题解/二叉树/easy/0145.二叉树的后序遍历.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0226.翻转二叉树](doc/leedcode题解/二叉树/easy/0226.翻转二叉树.md)</font> 
