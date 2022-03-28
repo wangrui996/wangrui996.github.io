@@ -165,9 +165,87 @@
        
 # TCP流量控制  
 
+![image](https://user-images.githubusercontent.com/58176267/160349849-4a61ac35-58a7-465b-b4b6-2259dd3390f6.png)
+
+![image](https://user-images.githubusercontent.com/58176267/160350236-c1951c2d-808d-4170-a02d-6daa1762b4e9.png)
+
+
+* 加入Receiver告知Sender RcvWindow = 0  
+    * 如果发送方不发送，那么之后接收方有空闲，发送方也不会发————死锁
+    * **发送方应该仍然发送一个较小的段，从而在让接收方发送ACK，此时带有新的RevWindows信息，避免死锁的现象**
 
        
-  
+
+# TCP连接管理  
+
+TCP是面向连接的传输层协议  因此，在实际数据传输前，要建立连接，数据都传输完了，要拆除连接  
+
+## 三次握手  
+
+* 1.客户机发送TCP报文段至服务器，其中SYN位置1,
+    * 携带的信息有  SYN位为1(表示要建立连接)、客户机选择的初始的序列号client_isn（初始序列号的选择机制有很多研究，比如随机选择？）
+    * 不携带数据
+
+* 2.服务器收到SYN报文段，如果自己可以连接连接，服务器分配缓存，并答复SYNACK报文段  
+    * SYN标志位还是1
+    * 选择自己的初始序列号并告知客户端server_isn
+    * ACK client_isn + 1 (刚才客户端选择的序列号的基础上加1)
+
+* 3.客户机收到 SYNACK 报文段，答复ACK报文段 
+    * 该报文段中SYN为0
+    * 序列号为client_isn + 1
+    * ACK server_isn + 1
+    * 可以包含数据    
+    * 目的是为了告知服务器，自己收到了服务器同意建立连接的报文段 
+
+### 为什么要用三次握手  
+
+
+
+### TCP 三次握手  
+
+* 可以看到，在第二次握手时，服务器就分配资源，假如第三次握手也就是客户机发送的ACK没有被服务器收到，服务器会保留所分配的资源一段时间，等它确认该连接不会再建立时，再释放资源 
+
+![image](https://user-images.githubusercontent.com/58176267/160354165-861e20b1-ea7e-4687-bff8-c8266c4bfbdf.png)
+
+
+
+### TCP 关闭连接   
+
+连接的拆除，客户机和服务器都可以发起，大多数情况是客户机发起请求  
+
+![image](https://user-images.githubusercontent.com/58176267/160355293-f26b6550-d1a9-4dd7-9008-60470b151851.png)
+
+
+### TCP连接管理  
+
+下图分别表好似客户机和服务器上TCP的生命周期，可以看出
+
+* 客户端
+    * 初始是TCP关闭状态
+    * 应用层需要一个TCP连接时，TCP发送SYN报文段尝试连接，进入SYN_SENT状态,等待SYN ACK 
+    * 收到SYN ACK后，发送ACK,进入ESTABLISHED状态，该状态下，可为上层应用传输数据
+    * 当上层应用希望关闭连接时，TCP发送FIN报文段，进入FIN_WAIT_1状态
+    * 当收到ACK时，进入FIN_WAIT_2状态
+    * 当收到FIN报文段时，发送ACK，进入TIME_WAIT等待状态
+    * 一般会等待30s，这个过程如果又收到FIN，会再次发送ACK； 等待完毕，关闭连接  
+    
+* 服务器端类似
+
+![image](https://user-images.githubusercontent.com/58176267/160357273-f3e3226d-e2d7-4486-bb43-edf36e83a01d.png)
+
+
+
+# TCP 拥塞控制
+
+
+
+
+
+
+
+
+
 
 
 
