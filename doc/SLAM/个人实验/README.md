@@ -68,3 +68,20 @@ make -j16
 sudo make install
 ```
 
+
+
+
+# 源码安装mavros
+[源码安装mavros](https://blog.csdn.net/weixin_44917390/article/details/106320411)
+
+
+# ROS工作空间的注意事项  
+
+
+
+
+
+
+
+
+
