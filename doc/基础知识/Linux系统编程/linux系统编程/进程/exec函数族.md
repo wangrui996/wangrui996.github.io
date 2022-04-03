@@ -70,8 +70,44 @@ int execl(const char *path, const char *arg, ...);  //自己指定待执行程�
 ![image](https://user-images.githubusercontent.com/58176267/161290783-1954f124-37c1-4ca5-884a-3f0c964b384e.png)
 
 
+## 练习demo  
+
+将当前系统中的进程信息打印到文件中  
+
+ps aux 终端会打印当前系统的所有进程信息   现在要写个程序把这个命令指令的结果放到一个文件中  
+
+要用到 open  execlp/execl  dup2  
+
+* 代码中没有写close(fd),是因为如果execlp调用成功的话就不会回到当前进程了；暂时靠return 0 以后隐式回收  
+
+![image](https://user-images.githubusercontent.com/58176267/161433567-5ddc402c-6a36-4ef2-a7c1-d0c358661fdd.png)
+
 
 # exec函数族特性  
+
+
+**exec 函数一旦调用成功，执行新的程序，不会返回， 只有失败才返回，错误值-1 。所以，通常直接在 exec 函数调用后直接调用 perror()，和 exit()，不用像打开一个文件时用if判断。**  
+
+* l(list)  命令行参数列表
+* p(path)  搜索 file 时使用 path 变量
+* v(vector) 使用命令行参数数组
+* e(environment) 使用环境变量数组，不适用进程原有的环境变量，设置新加载程序运行的环境变量  
+
+事实上，**只有 execve 是真正的系统调用，其他 5 个函数最终都调用 execve，是库函数**，所以execve 在 man 手册第二节，其它函数在 man 手册第 3 节  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
