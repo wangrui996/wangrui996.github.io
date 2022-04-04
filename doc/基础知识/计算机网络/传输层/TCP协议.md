@@ -382,6 +382,35 @@ TCP是面向连接的传输层协议  因此，在实际数据传输前，要建
 # TCP性能分析  
 
 
+## 吞吐率  
+
+忽略慢启动  
+
+![image](https://user-images.githubusercontent.com/58176267/161485406-46c71b57-b5da-4b0a-bfee-329eb1154ccd.png)
+
+
+## 探讨下未来的TCP  
+
+![image](https://user-images.githubusercontent.com/58176267/161485545-54de4b4e-101e-43f7-be5a-300b38e00794.png)
+
+* 按上面10Gbps的吞吐率，丢包率需要限制在 2 * 10^(-10) ,这对于网络的要求(传输媒介等)太高  
+* 
+![image](https://user-images.githubusercontent.com/58176267/161485650-af2d8468-cb9e-4e27-b7cb-225919b93d28.png)
+
+## TCP的公平性  
+
+![image](https://user-images.githubusercontent.com/58176267/161486727-26d29603-78e6-4f01-ad09-aa4bd5a06150.png)
+
+* 收敛到带宽相等使用的线上
+* TCP具有公平性
+
+![image](https://user-images.githubusercontent.com/58176267/161487018-0d39b1ab-37cb-4fea-a23f-4c3ccdb16691.png)
+
+## TCP和UDP共存时  
+
+![image](https://user-images.githubusercontent.com/58176267/161487216-80c0cf54-9ba6-442e-8981-80cc4030d9da.png)
+
+
 
 
 
