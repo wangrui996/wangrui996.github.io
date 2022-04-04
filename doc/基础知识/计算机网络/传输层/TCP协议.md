@@ -313,6 +313,76 @@ TCP是面向连接的传输层协议  因此，在实际数据传输前，要建
 
 ## TCP 拥塞控制原理  
 
+### TCP拥塞控制基本原理  
+
+* 发送放设置一个变量CongWin，拥塞窗口   
+
+* 发送放限制发送速率： 发送的最后一个Byte的序列号 —— 最后一个确认的byte的序列号 <= CongWin
+    * 通过改变CongWin，控制发送速率  相当于限制了已发送但未确认的数据量   粗略来将，在一个RTT内会发送CongWin个Byte的数据 即 速率 rate 约等于 CongWin / RTT Byte/s  
+
+* CongWin的大小需要动态调整，如网络拥塞比较严重，就将CongWin变小  
+
+* 问题是，怎样感知网络拥塞情况？  
+    * 定义一个 Loss事件 = timeout 或 3个重复ACK (发生这个事件时认为网络出现了拥塞)
+    * 发生Loss事件，发送方降低速率
+
+* 怎样合理地调整发送速率
+    * **加性增**——**乘性减** ： AIMD   拥塞避免机制 
+    * **慢启动**  SS 
+
+![image](https://user-images.githubusercontent.com/58176267/161481207-0d64f62f-cf4c-4fd4-945f-3c112cd95d0a.png)
+
+
+### 加性增——乘性减 ： AIMD
+
+* 核心是：发送速率逐渐增加(线性)，知道发生loss事件，要快速降低CongWin(减半)
+* 具体的AIMD：
+    * 加性增：每个RTT将CongWin增大一个MSS————这种思想称为——拥塞避免（避免一下加很多导致拥塞或震荡）  MSS是指最大的段的长度 （意味着下次发送数据又可以多发一个MSS长度的段？） 
+    * 乘性减 ： 发生loss后将CongWin减半  
+
+* 锯齿行为
+
+![image](https://user-images.githubusercontent.com/58176267/161482431-1b5492be-ab02-49b3-9a10-93f0bca84a58.png)
+
+
+### TCP 慢启动 ： SS
+
+* 初始的CongWin为1  假设一个RTT是200ms  则初始速率 20kbps 很小的一个数字 
+
+![image](https://user-images.githubusercontent.com/58176267/161482990-7e69ee08-7351-4210-b494-4228c74114f1.png)
+
+![image](https://user-images.githubusercontent.com/58176267/161483096-eaa2e4fa-d08d-496d-a604-f28ea46ea062.png)
+
+### 什么时候应该由指数增长变为线性增长？ 即什么时候进入拥塞避免阶段  
+
+**依赖于变量 Threshold 变量  
+
+* 假设Threshold有个初始值8  
+* 一开始CongWin从1指数增长到8 然后线性增长，当发生loss时间时，Threshold减为loss前CongWin的一半，即6   
+* 早期的TCP版本，是蓝色线部分，一旦检测到loss事件后，将CongWin直接减为1 然后指数增长到6 再线性增长
+* 在TCP改进版本后，是加性增，乘性减，就是从12减为6，然后再加性增  
+
+![image](https://user-images.githubusercontent.com/58176267/161483263-a9695d51-eaba-4281-a663-b75a101f45da.png)
+
+### Loss事件处理————更加细致的处理机制   
+
+
+![image](https://user-images.githubusercontent.com/58176267/161484015-b63a6201-53f9-4dfe-9f59-3e8598c3d9e8.png)
+
+
+### 总结 
+
+* **注意： 慢启动是对拥塞控制来说的，不是对速率，是指慢一点启动拥塞控制，也就是慢一点开始让CongWin线性增长，即达到Threshold前指数增长，这就是慢启动**  
+
+![image](https://user-images.githubusercontent.com/58176267/161484185-8aefbe98-f2b8-4d32-89cd-67d76a53dfeb.png)
+
+
+
+
+
+
+
+
 
 
 
