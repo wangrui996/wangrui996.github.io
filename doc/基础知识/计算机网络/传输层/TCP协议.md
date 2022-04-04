@@ -347,7 +347,7 @@ TCP是面向连接的传输层协议  因此，在实际数据传输前，要建
 
 ### TCP 慢启动 ： SS
 
-* 初始的CongWin为1  假设一个RTT是200ms  则初始速率 20kbps 很小的一个数字 
+* 初始的CongWin为1 个MSS  假设一个RTT是200ms    则初始速率 20kbps 很小的一个数字 
 
 ![image](https://user-images.githubusercontent.com/58176267/161482990-7e69ee08-7351-4210-b494-4228c74114f1.png)
 
@@ -376,7 +376,10 @@ TCP是面向连接的传输层协议  因此，在实际数据传输前，要建
 
 ![image](https://user-images.githubusercontent.com/58176267/161484185-8aefbe98-f2b8-4d32-89cd-67d76a53dfeb.png)
 
+![image](https://user-images.githubusercontent.com/58176267/161485176-4e09f84b-f3e4-4a61-b3b8-0fade49ecf91.png)
 
+
+# TCP性能分析  
 
 
 
