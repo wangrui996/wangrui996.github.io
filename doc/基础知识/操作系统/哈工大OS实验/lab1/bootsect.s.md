@@ -7,6 +7,44 @@
 
 * as86汇编语言  
 * 感叹号！和分号; 后的部分为注释  
+* 汇编指示符以字符‘.’开始   如 .global  不会在编译时产生代码  
+* .global汇编指示符(汇编伪指令)  后面定义的是全局标号  如后面 begtext:
+* entry关键字，通常在链接多个目标文件成一个可执行文件时，应该在其中一个汇编程序中用该关键字指定一个入口标号
+
+
+* CS；代码段寄存器  
+* DS；数据段寄存器  
+* SS; 堆栈段寄存器  
+* ES: 附加段寄存器
+
+mov传送指令的一些用法  
+```as86
+!jmp  直接寄存器寻址。 跳转到bx值指定的地址处，相当于把bx的值拷贝到IP中  
+mov bx, ax
+jmp bx  
+
+!间接寄存器寻址        
+mov [bx], ax !将ax寄存器的值赋值给bx值指定的内存处
+jmp [bx]  !bx值指定的内存位置处的内容作为IP的值
+
+!把立即数xxx放入ax中  
+mov ax, #1234  ! 将立即数1234传送到ax
+mov ax, #msg1  ! 把一个标号msg1的地址值放到ax   
+
+!绝对寻址  把内存地址xxxx处的内容放入ax
+mov ax, 1234  ! 将内存地址1234处的内容放入ax
+mov ax, msg1  ! 将内存地址msg1处的内容放入ax
+mov ax, [msg1] ! []表示取里面内存地址的内容，与上面一条含义一样？
+
+!索引寻址
+mov ax, msg1[bx] ! msg1是个地址，msg1[bx]是该地址偏移bx的地址，即将msg1[bx]这个内存地址的内容放入ax
+mov ax, msg1[bx*4+si] !将msg1[bx*4+si]地址处内容放入ax  
+```
+
+
+
+
+
 
 
 ```as86
@@ -34,17 +72,19 @@ SYSSIZE = 0x3000
 ! read errors will result in a unbreakable loop. Reboot by hand. It
 ! loads pretty fast by getting whole sectors at a time whenever possible.
 
-.globl begtext, begdata, begbss, endtext, enddata, endbss
-.text
-begtext:
-.data
-begdata:
-.bss
-begbss:
-.text
+.globl begtext, begdata, begbss, endtext, enddata, endbss    !.global汇编指示符(汇编伪指令)  后面定义的是全局标号  如后面begtext:
+.text      !伪操作符  用于标识正文段的开始位置，并切换到text段
+begtext:   !定义了上面的全局标号  begtext
+.data      !伪操作符  用于标识数据段的开始位置，并把当前段切换到text段
+begdata:   !在数据段定义标号begdata
+.bss       !伪操作符  用于标识未初始化段的开始位置，并把当前段切换到bss段
+begbss:    !在bss段定义标号begbss
+.text	   !上面的代码用于在每一个段定义一个标号，这里再切换正文段开始编写后面的代码  
+
+!注意：这里三个段都定义在了同一重叠地址范围中,因此实际上不分段  
 
 SETUPLEN = 4				! nr of setup-sectors
-BOOTSEG  = 0x07c0			! original address of boot-sector
+BOOTSEG  = 0x07c0			! original address of boot-sector  赋值语句，定义标识符BOOTSEG的值(符号常量  可用10，8，16进制表示)  这是BIOS加载bootsect代码的原始段地址
 INITSEG  = 0x9000			! we move boot here - out of the way
 SETUPSEG = 0x9020			! setup starts here
 SYSSEG   = 0x1000			! system loaded at 0x10000 (65536).
@@ -54,18 +94,18 @@ ENDSEG   = SYSSEG + SYSSIZE		! where to stop loading
 !		0x301 - first partition on first drive etc
 ROOT_DEV = 0x306
 
-entry _start
+entry _start        !告知链接程序，程序从_start标号开始  
 _start:
-	mov	ax,#BOOTSEG
-	mov	ds,ax
-	mov	ax,#INITSEG
-	mov	es,ax
+	mov	ax,#BOOTSEG  !0x07c0给ax
+	mov	ds,ax        !0x07c0给数据段寄存器  因为ds是地址段寄存器，段寄存器不能直接将值传动给自己，必须借助其他寄存器  
+	mov	ax,#INITSEG  !setup起始地址
+	mov	es,ax        
 	mov	cx,#256
 	sub	si,si
 	sub	di,di
 	rep
 	movw
-	jmpi	go,INITSEG
+	jmpi	go,INITSEG   ! jmpi 长跳转
 go:	mov	ax,cs
 	mov	ds,ax
 	mov	es,ax
