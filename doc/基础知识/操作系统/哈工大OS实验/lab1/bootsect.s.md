@@ -74,7 +74,7 @@ SYSSIZE = 0x3000
 
 .globl begtext, begdata, begbss, endtext, enddata, endbss    !.global汇编指示符(汇编伪指令)  后面定义的是全局标号  如后面begtext:
 .text      !伪操作符  用于标识正文段的开始位置，并切换到text段
-begtext:   !定义了上面的全局标号  begtext
+begtext:   !定义了上面的全局标号  begtext：
 .data      !伪操作符  用于标识数据段的开始位置，并把当前段切换到text段
 begdata:   !在数据段定义标号begdata
 .bss       !伪操作符  用于标识未初始化段的开始位置，并把当前段切换到bss段
@@ -305,9 +305,10 @@ root_dev:   !
 boot_flag:
 	.word 0xAA55   !有效引导扇区标志字0xAA55  供BIOS加载引导扇区使用     510-511   
 	
-!后面没有代码或数据了，所以boot.s编译出来执行程序为512字节  
+!后面没有代码或数据了，所以bootsect.s编译出来执行程序为512字节？  
 
-.text
+ !用于正文段数据段和未初始化段的结束位置  这样可以用来在链接多个目标模块时区分各个模块中各段的开始和结束位置  linux0.11中bootsect.s，setup.s都是单独编译链接的，各自生成的二进制文件没有和其他目标文件进行链接，所以这里的各个段的声明(起始和结束地址)可以省略  
+.text     
 endtext:
 .data
 enddata:
@@ -315,6 +316,12 @@ enddata:
 endbss:
 ```
 
+
+使用as86编译链接指令将其编译链接成可执行文件  
+![image](https://user-images.githubusercontent.com/58176267/161990815-28013e5c-bc1e-4f4c-8861-7a920ae0ab5c.png)
+
+* 发现可执行文件大小不为512B，因为链接指令生成MINIX结构的可执行文件，多出了32B时MINIX可执行文件的头结构
+* 可以使用linux系统的dd命令取出可执行文件的前32字节，然后可以输出结构到软盘或者Bochs模拟系统的软盘映像文件
 
 
 
