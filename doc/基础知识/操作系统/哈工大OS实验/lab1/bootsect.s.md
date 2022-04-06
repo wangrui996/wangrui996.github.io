@@ -41,10 +41,17 @@ mov ax, msg1[bx] ! msg1是个地址，msg1[bx]是该地址偏移bx的地址，�
 mov ax, msg1[bx*4+si] !将msg1[bx*4+si]地址处内容放入ax  
 ```
 
+**ADCII中的回车和换行**
+* 回车CR(ASCII码为13)-将光标移动到当前行的开头
+* 换行L(ASCII码为10)F-将光标“垂直”移动到下一行，而并不移动到下一行的开头，即不改变光标水平位置。
 
-
-
-
+因此代码中 显示的字符串，是在之前显示的内容基础上，先换行到下一行行首，显示"Loading system ..." 然后再连续两个回车换行，即下一次如果再输出字符串"xxx"，两个字符串之间会间隔一行
+```as86
+msg1:
+	.byte 13,10                   !.byte操作符定义字符  如果是字符需要用单引号括住 如'A'  也可以直接用ASCII码   13,10  回车和换行的ASCII码  
+	.ascii "Loading system ..."   !字符串的定义需要使用伪操作符.ascii 并且要使用双括号 伪操作符.ascii还会在字符串末尾添加一个NULL(ascii码为0)
+	.byte 13,10,13,10
+```
 
 
 ```as86
@@ -147,11 +154,11 @@ ok_load_setup:
 	xor	bh,bh
 	int	0x10
 	
-	mov	cx,#24
-	mov	bx,#0x0007		! page 0, attribute 7 (normal)
+	mov	cx,#24                  ! 共显示24个字符(包括回车换行)
+	mov	bx,#0x0007		! page 0, attribute 7 (normal) 设置显示属性   字符显示颜色？    属性 7
 	mov	bp,#msg1
 	mov	ax,#0x1301		! write string, move cursor
-	int	0x10         ! BIOS中断  使用其功能19，子功能1，作用是显示一串字符串 寄存器cx是字符串长度值  dx是显示位置值 
+	int	0x10         ! BIOS中断  使用其功能19，子功能1，作用是显示一串字符串光标移动到字符串结尾    寄存器cx是字符串长度值  dx是显示位置值 
 
 ! ok, we've written the message, now
 ! we want to load the system (at 0x10000)
