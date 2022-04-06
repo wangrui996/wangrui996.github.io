@@ -56,5 +56,17 @@ sudo apt-get install libx11-6:i386
 
 sudo apt-get install libxpm4:i386
 
+### 运行成功  
+
+
+![image](https://user-images.githubusercontent.com/58176267/161963901-a5e031f7-9b0d-4d87-9414-a50fab70984a.png)
+
+
+
+
+
+
+
+
 
 
