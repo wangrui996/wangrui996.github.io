@@ -151,7 +151,7 @@ ok_load_setup:
 	mov	bx,#0x0007		! page 0, attribute 7 (normal)
 	mov	bp,#msg1
 	mov	ax,#0x1301		! write string, move cursor
-	int	0x10
+	int	0x10         ! BIOS中断  使用其功能19，子功能1，作用是显示一串字符串 寄存器cx是字符串长度值  dx是显示位置值 
 
 ! ok, we've written the message, now
 ! we want to load the system (at 0x10000)
@@ -294,15 +294,18 @@ sectors:
 	.word 0
 
 msg1:
-	.byte 13,10
-	.ascii "Loading system ..."
+	.byte 13,10                   !.byte操作符定义字符  如果是字符需要用单引号括住 如'A'  也可以直接用ASCII码   13,10  回车和换行的ASCII码  
+	.ascii "Loading system ..."   !字符串的定义需要使用伪操作符.ascii 并且要使用双括号 伪操作符.ascii还会在字符串末尾添加一个NULL(ascii码为0)
 	.byte 13,10,13,10
 
-.org 508
-root_dev:
-	.word ROOT_DEV
+.org 508    ! 伪操作符.org  定义了当前汇编的位置  该语句将会把汇编器编译过程中当前段的位置计数器值调整为该伪操作符语句上给出的值 这里设置计数器为508 并在508处放置了两个标志字
+!实际上.org 508 就意味着后面的指令从地址508(0x1FC)开始存放
+root_dev:   ! 
+	.word ROOT_DEV  ! 508处 定义了一个字(两个内存单元) 即508-509
 boot_flag:
-	.word 0xAA55
+	.word 0xAA55   !有效引导扇区标志字0xAA55  供BIOS加载引导扇区使用     510-511   
+	
+!后面没有代码或数据了，所以boot.s编译出来执行程序为512字节  
 
 .text
 endtext:
