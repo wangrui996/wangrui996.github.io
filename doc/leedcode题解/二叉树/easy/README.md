@@ -15,14 +15,13 @@
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0226.翻转二叉树](doc/leedcode题解/二叉树/easy/0226.翻转二叉树.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0257.二叉树的所有路径](doc/leedcode题解/二叉树/easy/0257.二叉树的所有路径.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0404.左叶子之和](doc/leedcode题解/二叉树/easy/0404.左叶子之和.md)</font> 
+- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0510.二叉搜索树中的众数](doc/leedcode题解/二叉树/easy/0510.二叉搜索树中的众数.md)</font>
+- <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0530.二叉搜索树的最小绝对差](doc/leedcode题解/二叉树/easy/0530.二叉搜索树的最小绝对差.md)</font>
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0559.N叉树的最大深度](doc/leedcode题解/二叉树/easy/0559.N叉树的最大深度.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0589.N叉树的前序遍历](doc/leedcode题解/二叉树/easy/0589.N叉树的前序遍历.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0590.N叉树的后序遍历](doc/leedcode题解/二叉树/easy/0590.N叉树的后序遍历.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0559.N叉树的最大深度](doc/leedcode题解/二叉树/easy/0559.N叉树的最大深度.md)</font> 
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0617.合并二叉树](doc/leedcode题解/二叉树/easy/0617.合并二叉树.md)</font>
 - <font style="font-weight:bold; color:#4169E1;text-decoration:underline;" target="_blank">[0637.二叉树的层平均值](doc/leedcode题解/二叉树/easy/0637.二叉树的层平均值.md)</font> 
-
-
-
 
 
