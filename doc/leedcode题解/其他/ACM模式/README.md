@@ -75,6 +75,11 @@ int main()
 ####
 
 
+
+####  例题  
+
+* 将输入字符串中  元音字母替换为对应的大写字母  辅音字母替换为小写
+
 ```cpp
 #include <iostream>
 #include <string>
