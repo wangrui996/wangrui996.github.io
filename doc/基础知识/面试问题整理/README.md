@@ -70,3 +70,45 @@ int (*p2)[5];
 ## memcpy  
 
 [C标准库 memcpy](https://www.runoob.com/cprogramming/c-function-memcpy.html)
+
+
+
+
+
+## linux  
+
+
+### 软链接和硬链接  
+
+* 硬链接与原文件共用inode  实际上是一个文件的别名  ln a b 创建a的硬链接b 
+* 软链接又叫符号链接   ln -s a b 创建a的软链接b
+[软链接和硬链接](https://www.cnblogs.com/xiaochaohuashengmi/archive/2011/10/05/2199534.html)
+
+#### 查看软、硬链接  
+
+* 使用 ls -l 查看文件信息  
+	* 软链接文件的符号是s  
+	* 权限后面第二列的数字就是硬链接计数，大于等于2说明它是一个硬链接文件
+* 使用 ls -il  会在最前面增加一个文件的 inode number 硬链接文件会和其它文件拥有相同的inode number
+
+
+### 查看进程id  
+
+ps -aux ：查看所有进程信息，包括进程id，进程名，子进程id等
+ps -aux | grep 执行文件名  可以查看指定进程的id  
+
+### 查看cpu占有率 top指令  
+
+
+
+
+
+###
+
+
+
+
+
+
+
+
