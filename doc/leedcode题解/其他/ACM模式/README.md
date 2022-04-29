@@ -12,6 +12,51 @@
 
 
 
+## getline  
+
+[getline cplusplus解释——必看](https://www.cplusplus.com/reference/string/string/getline/?kw=getline)
+
+
+* getline可以从流中回去以某分割符划分的数据  默认分割符是换行符'\n'  
+    * 从输入流获取一整行字符串  getline(std::cin, str)
+    * 从流中以某字符为分割，获取分割的子串 
+        * 如下面的例子中getline(ss, tmp, ',') 会从开始位置读，直到遇到字符','或流中无数据结束，然后去掉','保存获取的子串到tmp
+        * **注意：** 执行一次getline(ss, tmp, ',')，流中就会少一部分数据 例如ss含有字符串"1,2,3,4"执行两次getline(ss, tmp, ',')后，ss流中字符串为"3,4" 
+        * 假设流ss没有数据，则 if(getline(ss, tmp, ','))为假 
+
+
+### 字符串输入转换为数组，链表，树等  
+
+* 1.输入一个数组(链表)，用逗号分割   1,2,3,4,5   
+
+```cpp
+int main()
+{
+	string str;
+	stringstream ss;
+
+	getline(cin, str);
+
+	ss << str;
+
+	string tmp;
+
+	while (getline(ss, tmp, ',')) {
+		cout << stoi(tmp) << ',';
+	}
+
+	cout << endl;
+
+	return 0;
+}
+```
+
+
+
+
+
+
+
 
 
 ## 小数点  
@@ -312,14 +357,30 @@ priority_queue<int, vector<int>, Cmp> pri_que;
 ```
 
 
-
-
 ## 数组、哈希表、哈希集合相互转换  
 
 
 
+class Solution {
+public:
+    int lastStoneWeight(vector<int>& stones) {     
+        priority_queue<int> heap;
+        for(int weight : stones) {
+            heap.push(weight);
+        }
+        while(heap.size() > 1) {
+            int x = heap.top();
+            heap.pop();
+            int y = heap.top();
+            heap.pop();
+            if(x - y != 0) {
+                heap.push(abs(x - y));
+            }
+        }
+        return heap.top();
 
-
+    }
+};
 
 
 

@@ -23,3 +23,113 @@
 
 
 
+
+
+## 互斥量  
+
+* 一般情况下，使用std::lock_guard 或者 std::unique_lock而不是直接用 std::mutex
+
+
+```cpp
+#include <iostream>
+#include <thread>
+#include <mutex>
+
+std::mutex mtx1;
+std::mutex mtx2;
+
+int x = 0;
+
+void task1() {
+    for(int i = 0; i < 10000000; ++i) {
+        //std::lock_guard<std::mutex> lock1(mtx1);
+        //std::lock_guard<std::mutex> lock2(mtx2);
+        //析构时自动释放锁(本质是构造时上锁，析构时解锁)
+
+        //
+        std::unique_lock<std::mutex> lock3(mtx1);
+        // std::unique_lock<std::mutex>允许对象析构前就释放锁
+        // 它还记录了当前是上锁还是解锁的状态  
+        lock3.unlock();
+
+        x++;
+        x--;
+    }
+
+}
+
+```
+
+
+## 原子量  
+
+
+
+```cpp
+#include <iostream>
+#include <thread>
+#include <atomic>
+
+std::atomic<int> x = 0;
+
+void task1() {
+    for(int i = 0; i < 10000000; ++i) {
+        x++;
+        x--;
+    }
+}
+
+void task2() {
+    for(int i = 0; i < 10000000; ++i) {
+        x++;
+        x--;
+    }
+}
+
+int main() {
+    std::thread t1(task1);
+    std::thread t2(task2);
+
+    t1.join();
+    t2.join();
+
+    return 0;
+}
+```
+
+
+
+## 条件变量 和 信号量  
+
+
+```cpp
+#include <iostream>
+#include <thread>
+#include <atomic>
+
+std::atomic<int> x = 0;
+
+void task1() {
+    for(int i = 0; i < 10000000; ++i) {
+        x++;
+        x--;
+    }
+}
+
+void task2() {
+    for(int i = 0; i < 10000000; ++i) {
+        x++;
+        x--;
+    }
+}
+
+int main() {
+    std::thread t1(task1);
+    std::thread t2(task2);
+
+    t1.join();
+    t2.join();
+
+    return 0;
+}
+```
