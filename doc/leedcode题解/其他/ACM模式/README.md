@@ -342,6 +342,24 @@ bool cmp(const pair<int, int> &a, const pair<int, int> &b){
 sort(vec.begin(), vec.end(), cmp);
 ```
 
+* 比较函数用lambda表达式  
+
+```cpp
+sort(v.begin(), v.end(), [](const pair<char, int>& a, const pair<char, int>& b) {
+	return a.second > b.second;
+});
+```
+
+* 多语义的比较
+
+```cpp
+// 这里假设pair中char表示字符串中某个字符，int表示它出现的频次
+// 下面这个写法，是按字符出现频次降序排列，如果字符出现频次相等，那就按照字符在ASCII表上出现的顺序排列 
+sort(v.begin(), v.end(), [](const pair<char, int>& a, const pair<char, int>& b) {
+        return (a.second > b.second || (a.second == b.second && a.first < b.first));
+	});
+```
+
 
 ### 对于优先级队列  
 
@@ -360,27 +378,49 @@ priority_queue<int, vector<int>, Cmp> pri_que;
 ## 数组、哈希表、哈希集合相互转换  
 
 
+### 数组和哈希表  
 
-class Solution {
-public:
-    int lastStoneWeight(vector<int>& stones) {     
-        priority_queue<int> heap;
-        for(int weight : stones) {
-            heap.push(weight);
-        }
-        while(heap.size() > 1) {
-            int x = heap.top();
-            heap.pop();
-            int y = heap.top();
-            heap.pop();
-            if(x - y != 0) {
-                heap.push(abs(x - y));
-            }
-        }
-        return heap.top();
 
-    }
-};
+* 因为哈希表的每个元素是个pair类型 (pair定义在 #include <utility>头文件)
+* 可以直接用哈希表初始化一个数组，数组中每个元素就是一个pair  
+
+```cpp
+bool cmp(const pair<char, int> &a, const pair<char, int> &b)
+{
+	return a.second > b.second;
+}
+
+int main()
+{
+	unordered_map<char, int> mp;
+	//统计字符串s频次
+	string s = "ajkaadsdsdddsaasedwdddd";
+
+	for (char c : s)
+	{
+		mp[c]++;
+	}
+	vector<pair<char, int>> v(mp.begin(), mp.end());
+	sort(v.begin(), v.end(), cmp);
+    // sort(v.begin(), v.end(), [](const pair<char, int>& a, const pair<char, int>& b) {
+	// return a.second > b.second;
+    // });
+
+    // 下面这个写法，是按字符出现频次降序排列，如果字符出现频次相等，那就按照字符在ASCII表上出现的顺序排列 
+    // sort(v.begin(), v.end(), [](const pair<char, int>& a, const pair<char, int>& b) {
+	// return (a.second > b.second || (a.second == b.second && a.first < b.first));
+	// });
+
+
+	for (auto tmp : v) {
+		cout << tmp.first << ':' << tmp.second << endl;
+	}
+
+	cout << endl;
+
+	return 0;
+}
+```
 
 
 
