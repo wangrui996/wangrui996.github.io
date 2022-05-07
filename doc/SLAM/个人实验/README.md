@@ -72,7 +72,9 @@ sudo make install
 
 
 # 源码安装mavros
-[源码安装mavros](https://blog.csdn.net/weixin_44917390/article/details/106320411)
+[源码安装mavros](https://blog.csdn.net/weixin_44917390/article/details/106320411)  
+
+* 对于台式机，可直接清空build与devel文件夹后，重新执行 catkin init 与 catkin build即可
 
 
 # ROS工作空间的注意事项  
