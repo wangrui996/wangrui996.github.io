@@ -21,6 +21,8 @@ evo_traj euroc data.csv --save_as_tum
 
 [vins使用evo](https://www.freesion.com/article/8476832588/)
 
+https://www.aintk.xyz/post/2018-06-07-evo/
+
 https://blog.csdn.net/neptune4751/article/details/109744159
 
 https://blog.51cto.com/u_14411234/3127894
