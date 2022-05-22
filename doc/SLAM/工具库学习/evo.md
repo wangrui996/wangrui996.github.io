@@ -33,7 +33,7 @@ https://blog.51cto.com/u_14411234/3127894
 
 [slam精度评估](https://blog.csdn.net/shyjhyp11/article/details/115054154)
 
-mean：均值
-median： 中值
-rmse： 均方根误差
+mean：均值  
+median： 中值  
+rmse： 均方根误差  
 
