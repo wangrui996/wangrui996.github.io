@@ -9,4 +9,9 @@
 
 ![image](https://user-images.githubusercontent.com/58176267/173308097-ac1ee8bc-17d8-4770-a424-631cb82271cc.png)  
 
+* 要有一个对应的文件结构体，使用open打开设备后，根据此结构体获取设备信息  
+
+![image](https://user-images.githubusercontent.com/58176267/173309129-c052ce71-427d-4ca5-aa86-99d78fbc3c22.png)  
+
+
 
