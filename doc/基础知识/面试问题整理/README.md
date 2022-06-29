@@ -12,10 +12,10 @@
 
 # C语言字符串与字符数组  
 
-[C语言字符串与字符数组](https://blog.csdn.net/annjeff/article/details/107727886)  
+[C语言字符串与字符数组](https://blog.csdn.net/annjeff/article/details/107727886)   
 
-
-
+[C语言字符串与字符数组 及 字符串常用操作函数](https://www.jb51.net/article/229511.htm)  
+ 
 ## ASCII码  
 
 * 'a'————>97   'A'————>65  
