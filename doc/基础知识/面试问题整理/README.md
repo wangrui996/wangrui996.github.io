@@ -10,6 +10,12 @@
 
 ## C语言  
 
+# C语言字符串与字符数组  
+
+[C语言字符串与字符数组](https://blog.csdn.net/annjeff/article/details/107727886)  
+
+
+
 ## ASCII码  
 
 * 'a'————>97   'A'————>65  
