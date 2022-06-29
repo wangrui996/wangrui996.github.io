@@ -10,6 +10,17 @@
 
 ## C语言  
 
+## ASCII码  
+
+* 'a'————>97   'A'————>65  
+
+* 字符串 “\x21” 的字节数为1字节 16进制的21 对应ASCII码的'!'
+* ”\test”字符串的字节 ： 5
+
+ 
+![image](https://user-images.githubusercontent.com/58176267/176386754-8ec4c41b-4d61-427f-95d1-a3ad581abea9.png)
+
+
 ## switch case 执行顺序  
 
 * **进到case之后就顺序往后执行，碰到break或者到switch末尾处就结束** 只要能顺序到达defult(起始也就是defalut之前没有break)，就一定能执行它的语句  
