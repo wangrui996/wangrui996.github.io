@@ -9,6 +9,16 @@
 
 ![image](https://user-images.githubusercontent.com/58176267/176395295-2c6f9153-2dcc-4af5-bf8e-073522f8b455.png)  
 
+![image](https://user-images.githubusercontent.com/58176267/176430370-a8728eba-5336-4421-b88b-c5a7efec2399.png)  
+
+
+* scanf("%u", sizeof(str)); %u表示无符号整型 sizeof返回的就是  
+
+
+* printf输出格式总结：  
+ 
+![image](https://user-images.githubusercontent.com/58176267/176455594-38cd3922-ebef-458f-b323-08b4e862f170.png)  
+
 
 ### 构造链表  
 
@@ -76,8 +86,16 @@ int main(void) {
 ![image](https://user-images.githubusercontent.com/58176267/176390425-973a4768-56d7-403e-bad1-e04506d41a5f.png)
 
 
+## getline() 函数  
+
+https://blog.csdn.net/zxx910509/article/details/53196587  
 
 
 ## malloc函数  
 
 ![image](https://user-images.githubusercontent.com/58176267/176425215-52a887a6-db26-407a-9dad-f6fb218c84c4.png)  
+
+
+
+
+
