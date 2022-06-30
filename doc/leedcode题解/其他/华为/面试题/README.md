@@ -55,7 +55,13 @@ int main() {
 
 
 
-## 4.内联函数和宏函数的区别
+## 4.内联函数和宏函数的联系与区别
+
+[内联函数和宏函数的联系与区别](https://blog.csdn.net/romantic_c/article/details/81489479)  
+
+## const 与 define  
+
+[const 与 define](https://blog.csdn.net/romantic_c/article/details/81489479)  
 
 ## 5.各种排序算法,原理，时间复杂度(平均和最坏)，适用场景
 
