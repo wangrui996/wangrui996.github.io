@@ -296,8 +296,72 @@ ps -aux | grep 执行文件名  可以查看指定进程的id
 显示系统内存的使用情况，包括物理内存、交换内存(swap)和内核缓冲区内存
 
 
+## 全局变量和同名的局部变量  
 
 
+* 在定义局部变量所在的范围内，以局部变量为准，否则就是全局变量  
+* 例如下面例子上有个全局变量m, 函数中又定义了一个m，在函数中，m值为3，在主函数或其他函数中直接用m就是13  
+* 如果把函数中m前面int去掉，那么m就是修改的全局变量  
+
+```cpp
+int m =13;
+int fun(int x, int y){
+    int m = 3; return(x*y - m);
+}
+```
+
+## sizeof 与 strlen  
+
+* sizeof是操作符  strlen是string.h中的函数  
+* sizeof操作对象可以是变量、类型名   strlen只针对字符串
+* sizeof计算的是字节数   strlen求的是字符串的长度，不包含末尾的'\0' （但在sizeof中'\0'也算占一个字节）  
+
+* 在32位机器上，分别对下面求sizeof,得到6  4  4
+
+```c
+    char str[] = "hello";
+    char *p = str;
+    int n = 10;
+```
+ 
+## linux bootloader过程  
+
+
+## 中断处理的过程  
+
+
+## 线程的几种锁  
+
+[线程的几种锁](https://www.csdn.net/tags/OtDakgwsNjU0Ny1ibG9n.html)  
+
+
+## 排序算法 
+
+* 稳定的排序算法  
+
+
+* 如果给出大量数据，用什么排序算法  
+
+
+
+## 字节对齐的概念，原因，规则  
+
+
+## map和set  
+
+
+
+## 智能指针  
+
+* 种类
+	* auto
+	* unique
+	* shared
+	* 
+	* 作用： 
+* 什么时候智能指针  
+* **循环引用问题**  有什么解决方式  
+* 
 
 
 
