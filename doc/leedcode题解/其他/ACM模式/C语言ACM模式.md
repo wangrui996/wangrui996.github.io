@@ -96,6 +96,25 @@ https://blog.csdn.net/zxx910509/article/details/53196587
 ![image](https://user-images.githubusercontent.com/58176267/176425215-52a887a6-db26-407a-9dad-f6fb218c84c4.png)  
 
 
+## C语言输入输出练习  
+
+* 下面代码可从输出格式为  1 3 45 56   读取一整行数据 
+* scanf("%d", &n)读取一个整数并保存到n  之后通过getchar()读取一个字符并判断是否是换行符，因为输入数据之间使用空格隔开的，所以在一行数据结束前，getchar()得到的是空格这个字符，它的返回值是读取到的字符的ASCII码 
+
+```c
+int main(void) {
+
+    int n;
+    while(scanf("%d", &n) == 1) {
+        if(getchar() == '\n')break;
+        printf("%d ", n);
+    }
+    printf("%d\n", n);   
+    return 0;
+}
+```
+
+
 
 
 
