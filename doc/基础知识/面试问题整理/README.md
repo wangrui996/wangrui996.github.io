@@ -310,6 +310,26 @@ int fun(int x, int y){
 }
 ```
 
+## typedef  
+
+* typedef 基本作用   
+* typedef与函数指针  
+* 根据下面链接内容  
+```c
+typedef int (* FUN) (); // 给类型起别名  这以后，FUN就代表  int () 函数指针类型  用它来定义一个变量，这个变量就是一个函数指针
+FUN funPoint;  //funPoint是一个函数指针  如果没有上面的typedef  可以这么声明：int (* funPoint) (); 
+
+funPoint = print; //使用函数指针  后面可以直接调用 funPoint(); （C语言中好像要加解引用符？ （*funPoint)(); ）
+
+int print()
+{
+	//.....
+}
+```
+[typedef](https://blog.csdn.net/weixin_42639919/article/details/81240779?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-81240779-blog-85251417.pc_relevant_aa2&spm=1001.2101.3001.4242.1&utm_relevant_index=3)
+
+
+
 ## sizeof 与 strlen  
 
 * sizeof是操作符  strlen是string.h中的函数  
