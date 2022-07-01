@@ -23,13 +23,17 @@
 * 字符串 “\x21” 的字节数为1字节 16进制的21 对应ASCII码的'!'
 * ”\test”字符串的字节 ： 5
 
+* printf("%d\n",(int)strlen("\t\"\65\xff\n"));  输出结果为 5  
+	* 转移字符后跟数字  数字会被当作八进制的ASCII码进行转义  
+	* \xff：这是一个转义字符，\x表示后面的数是十六进制，ff是十六进制数。常规的ASCII码，最大值是为0x7f，后面的从0x80到0xff为扩展ASCII码，不是标准的ASCII码.这些字符是用来表示框线、音标和其它欧洲非英语系的字母。
+	* **strlen求的是字符串的长度（不包含末尾的'\0'）**
  
 ![image](https://user-images.githubusercontent.com/58176267/176386754-8ec4c41b-4d61-427f-95d1-a3ad581abea9.png)
 
 
 ## switch case 执行顺序  
 
-* **进到case之后就顺序往后执行，碰到break或者到switch末尾处就结束** 只要能顺序到达defult(起始也就是defalut之前没有break)，就一定能执行它的语句  
+* **进到case之后就顺序往后执行，碰到break或者到switch末尾处就结束** 只要能顺序到达default(起始也就是defalut之前没有break)，就一定能执行它的语句  
 * 下面代码执行 输出为13
 
 ```c
