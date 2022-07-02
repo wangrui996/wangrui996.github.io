@@ -192,6 +192,10 @@ call edx  调用派生类的show函数地址
 
 
 
+## 智能指针  
+
+[智能指针](https://blog.csdn.net/bitcarmanlee/article/details/124847634)  
+
 
 
 
