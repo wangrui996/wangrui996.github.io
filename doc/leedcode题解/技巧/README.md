@@ -16,6 +16,13 @@ vector<vector<bool>> dp(n, vector<bool>(target + 1));
 
 4.数组，集合，哈希表的相互转化  
 
+5.max 和 min 函数  
+
+#include <algorithm>  
+
+* max和min函数的两个传入参数是模板类型，要求两个传入参数类型一致  
+    * max(res, a.size()) 假如res为int型，a.size()返回值是unsigned 类型，因此这里会报错(同样注意的就是如果涉及比较，最好先将size函数返回值赋值到int型，再与其他int变量进行比较  )
+
 
 ## 关于左移右移  
 
