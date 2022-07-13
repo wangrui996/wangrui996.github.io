@@ -22,5 +22,3 @@
 [hard]](doc/leedcode题解/数组/hard/README.md)
 
 
-
-
