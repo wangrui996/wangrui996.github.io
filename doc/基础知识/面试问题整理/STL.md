@@ -64,6 +64,19 @@ int main ()
 myvector contains: 4 5 7 8 9 10
 ```
 
+
+## equal 函数  
+
+[cplusplus](https://cplusplus.com/reference/algorithm/equal/?kw=equal)
+
+## 判断两个vector是否相等  
+
+* 内置数据类型入int char 直接用 == 比较即可  内部会先判断大小相等，然后用equal函数(逐个比较每个元素是否相等)  
+
+[判断两个vector是否相等](https://blog.csdn.net/lllzzzhhh2589/article/details/121586275)  
+
+
+
 ## swap 函数  
 
 * 注意swap原型
