@@ -1,6 +1,13 @@
 # C++  
 
 
+
+
+
+## C++ 内存模型  
+
+![image](https://user-images.githubusercontent.com/58176267/178879641-6f34146c-a80f-4d45-8d2c-34f2f68d1ade.png)  
+
 <p id="父子类构造函数析构函数的调用顺序"></p>
 
 ## 父、子类构造函数、析构函数的调用顺序  
