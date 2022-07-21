@@ -26,8 +26,12 @@ static inline void unregister_chrdev(unsigned int major, const char *name)
     * name：要注销的设备对应的设备名。
 
 
-* Linux下，使用 cat /proc/devices  查看当前设备下的所有设备  找一个没用的主设备号  
+* **Linux下，使用 cat /proc/devices  查看当前设备下的所有设备  找一个没用的主设备号**  
  
+
+* 定义一个struct file_operations类型结构体并实现其中部分函数  
+
+
 
 
 ## 设备号  
@@ -62,6 +66,62 @@ typedef __kernel_dev_t		dev_t;
 * 宏 MKDEV 用于将给定的主设备号和次设备号的值组合成 dev_t 类型的设备号  
 
 
+## 编写测试应用程序  
+
+```cpp
+```
+
+
+* 挂载驱动文件，发现 /dev 下没注册时那个名字的设备  
+* 这里先手动创建设备节点文件   mknod /dev/chrdevbase c 200 0
+    * c 字符设备
+    * 200 主设备
+    * 0 次设备号 自己给一个
+
+
+## 驱动程序 xxx_read 和 xxx_write
+
+* 在驱动程序中，缓冲区对应的是内核缓冲区，当用户程序调用read读设备数据时，最终会调用驱动的xxx_read， 在该函数中，将内核数据拷贝给用户，需要借助 copy_to_user 函数
+    * 不能直接将内核缓冲区指针赋值给传入的用户缓冲区指针buf   
+
+
+* 对于xxx_write同理
+
+### copy_to_user 与 copy_from_user 函数
+
+* 头文件 #include <linux/uaccess.h>
+
+* copy_to_user
+
+```c
+unsigned long copy_to_user (void __user * to, const void * from, unsigned long n);  
+```
+
+* 参数  
+   * to 目标地址，这个地址是用户空间的地址
+   * from 源地址，这个地址是内核空间的地址
+   * n 将要拷贝的数据的字节数
+
+* 返回值
+    * 0 数据拷贝成功
+    * 失败，返回没有拷贝成功的数据字节数
+
+
+
+* copy_from_user
+
+```c
+unsigned long copy_from_user (void * to, const void __user * from, unsigned long n);
+```
+
+* 参数  
+   * to 目标地址，这个地址是内核空间的地址
+   * from 源地址，这个地址是用户空间的地址
+   * n 将要拷贝的数据的字节数
+   
+* 返回值
+    * 0 数据拷贝成功
+    * 失败，返回没有拷贝成功的数据字节数
 
 
 
