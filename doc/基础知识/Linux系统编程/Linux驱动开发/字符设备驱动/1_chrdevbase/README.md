@@ -30,6 +30,27 @@ static inline void unregister_chrdev(unsigned int major, const char *name)
 * Linux下每个设备都有一个设备号，分主设备号和次设备号  
 * Linux提供了一个 dev_t 数据类型表示设备号    定义在 /include/linux/types.h  
 
+```c
+typedef __u32 __kernel_dev_t;  （typedef unsigned int __u32;）
+typedef __kernel_fd_set		fd_set;
+typedef __kernel_dev_t		dev_t;
+```
+
+* 设备号使用dev_t类型  本质是unsigned int  手册 40.3.1  
+* 高12位 为主设备号(0-4095)  低20位 为次设备号  
+
+* 在 include/linux/kdev_t.h 中定义了几个操作设备号的宏  
 
 ```c
+#define MINORBITS	20
+#define MINORMASK	((1U << MINORBITS) - 1)
+
+#define MAJOR(dev)	((unsigned int) ((dev) >> MINORBITS))
+#define MINOR(dev)	((unsigned int) ((dev) & MINORMASK))
+#define MKDEV(ma,mi)	(((ma) << MINORBITS) | (mi))
 ```
+
+
+
+
+
