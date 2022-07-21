@@ -23,3 +23,13 @@ static inline void unregister_chrdev(unsigned int major, const char *name)
 *unregister_chrdev 函数用户注销字符设备，此函数有两个参数，这两个参数含义如下：
     * major：要注销的设备对应的主设备号。
     * name：要注销的设备对应的设备名。
+
+
+## 设备号  
+
+* Linux下每个设备都有一个设备号，分主设备号和次设备号  
+* Linux提供了一个 dev_t 数据类型表示设备号    定义在 /include/linux/types.h  
+
+
+```c
+```
