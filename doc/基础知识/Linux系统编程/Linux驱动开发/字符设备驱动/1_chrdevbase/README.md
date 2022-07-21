@@ -16,18 +16,23 @@ static inline void unregister_chrdev(unsigned int major, const char *name)
 
 * register_chrdev 函数用于注册字符设备，此函数一共有三个参数，这三个参数的含义如下：
     * major：主设备号，Linux 下每个设备都有一个设备号，设备号分为主设备号和次设备号两部分，关于设备号后面会详细讲解。
-    * name：设备名字，指向一串字符串。
-    * fops：结构体 file_operations 类型指针，指向设备的操作函数集合变量。
+        * 使用该函数注册的缺点就是，使用该主设备号后，会把它对应的所有次设备号都用了，比如可能只用一个次设备号的情景就可以了
+        * 因此在新的Linux设备驱动编写时，已经不再使用该函数  直接指定主次设备号，也可以直接通过内核申请，这里还需要自己指定，需要先查看下哪个设备号没被使用（主要是主设备号）  
+    * name：设备名字，指向一串字符串。  
+    * fops：结构体 file_operations 类型指针，指向设备的操作函数集合变量。  
 
-
-*unregister_chrdev 函数用户注销字符设备，此函数有两个参数，这两个参数含义如下：
+* unregister_chrdev 函数用户注销字符设备，此函数有两个参数，这两个参数含义如下：
     * major：要注销的设备对应的主设备号。
     * name：要注销的设备对应的设备名。
 
 
+* Linux下，使用 cat /proc/devices  查看当前设备下的所有设备  找一个没用的主设备号  
+ 
+
+
 ## 设备号  
 
-* Linux下每个设备都有一个设备号，分主设备号和次设备号  
+* Linux下每个设备都有一个设备号，分主设备号和次设备号   需要保证某个设备的设备号是唯一的
 * Linux提供了一个 dev_t 数据类型表示设备号    定义在 /include/linux/types.h  
 
 ```c
@@ -42,13 +47,24 @@ typedef __kernel_dev_t		dev_t;
 * 在 include/linux/kdev_t.h 中定义了几个操作设备号的宏  
 
 ```c
-#define MINORBITS	20
+#define MINORBITS	20     
 #define MINORMASK	((1U << MINORBITS) - 1)
 
 #define MAJOR(dev)	((unsigned int) ((dev) >> MINORBITS))
 #define MINOR(dev)	((unsigned int) ((dev) & MINORMASK))
 #define MKDEV(ma,mi)	(((ma) << MINORBITS) | (mi))
 ```
+
+* 宏 MINORBITS 表示次设备号位数,一共是 20 位
+* 宏 MINORMASK 表示次设备号掩码
+* 宏 MAJOR 用于从 dev_t 中获取主设备号,将 dev_t 右移 20 位即可
+* 宏 MINOR 用于从 dev_t 中获取次设备号,取 dev_t 的低 20 位的值即可
+* 宏 MKDEV 用于将给定的主设备号和次设备号的值组合成 dev_t 类型的设备号  
+
+
+
+
+
 
 
 
