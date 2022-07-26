@@ -7,7 +7,7 @@
 
 
  
-## 1.bubbleSort  
+## 1.bubbleSort 冒泡排序  
 
 * 更新边界 + 提前结束   优化  
 
@@ -74,7 +74,7 @@ int main()
 
 
 
-## 2.selectSort
+## 2.selectSort 选择排序
 
 
 * 单元选择 每次遍历找到最小的元素并记录其下标，然后和遍历的起始位置元素交换  
@@ -196,3 +196,138 @@ int main()
 ```
 
 
+### 3.insertSort 插入排序
+
+* 对于未排序的数据，在已排序序列中从后向前扫描，找到相应位置并插入  
+* 假如是升序排列，将某个要插入元素，依次与它前面的排序好的序列元素比较，如果要插入元素比它前面元素小，就交换
+* 插入排序的每一轮向前插入都使得该元素在完成插入后，从第一个元素到该元素是排序状态
+
+
+#### 基础插入排序  
+
+* 时间复杂度：两层for循环，外层总轮次为n - 1轮(n = nums.size())，当原数组逆序时，移动次数为 n*(n - 1) / 2次，最坏时间复杂度为O(n^2)，平均时间复杂度同为 O(n^2); 当原数组已基本有序时，接近线性复杂度 O(n)。例如原数组已完全排序，则算法只需比较 n - 1 次。
+
+```cpp
+#include <vector>  
+#include <iostream>
+
+using namespace std;  
+  
+void swap(vector<int>& nums, int i, int j)
+{
+    if(i == j)return;
+    nums[i] ^= nums[j];
+    nums[j] ^= nums[i];
+    nums[i] ^= nums[j];
+    return;
+}
+
+
+void insertSort(vector<int>& nums) {
+    if(nums.size() < 2)
+        return;
+    
+    for(int i = 1; i < nums.size(); ++i) {   // n-1轮循环
+        int insertValue = nums[i]; // 记录插入值  后面有可能会被覆盖  
+        // 当前要插入元素为nums[i]，此时区间 [0, i - 1]内元素是已排序好的  现在要做的就是从这个区间找到nums[i]的插入位置
+        int j = i - 1;
+        for(; j >= 0; --j) {
+            if(nums[j] > insertValue)  // 稳定排序 因为这里当nums[i]等于它前面某个位置的nums[j]时，就break了
+                nums[j + 1] = nums[j];
+            else 
+                break;
+        }
+        // 现在，j + 1位置就是插入元素要插入的位置
+        nums[j + 1] = insertValue;  // 假如没有发生交换 j会等于i-1 nums[j + 1]就是nums[i]也没错
+    }
+  
+    return;
+}
+
+
+
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    insertSort(nums);
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+    cout << endl;
+}  
+```
+
+#### 二分查找优化  
+
+* 可以知道，对于要插入元素nums[i], 它前面的 [0, i - 1]区间是已经排序好的，因此在寻找它的插入位置时，不需要依次和前面元素一一比较，可以二分查找模板，在区间[0, i - 1]中，寻找它应当的插入位置，这个在二分的题目中有个专门的题目  
+* 随便举个例子，搞清楚 当插入元素nums[i] 分别 大于，等于和小于二分中点元素时应该怎样收缩边界即可  
+
+
+* 时间复杂度： 二分插入总的查找(比较)次数虽为 O(nlogn)，但平均移动 (每轮移动一半的数字) 次数仍是 O(n^2)
+
+* 空间复杂度：算法中只有常数项变量，O(1)。 
+
+```cpp
+#include <vector>  
+#include <iostream>
+
+using namespace std;  
+  
+void swap(vector<int>& nums, int i, int j)
+{
+    if(i == j)return;
+    nums[i] ^= nums[j];
+    nums[j] ^= nums[i];
+    nums[i] ^= nums[j];
+    return;
+}
+
+
+int binarySearch(const vector<int> &nums, int start, int end, int target) {
+    int left = start, right = end;
+    while(left <= right) {
+        int mid = left + (right - left) / 2;
+        if(nums[mid] > target) {
+            right = mid - 1;
+        } else if(nums[mid] < target) {
+            left = mid + 1;
+        } else if(nums[mid] == target) {
+            left = mid + 1;
+        }
+    }
+    return left;
+}
+
+void insertSort(vector<int>& nums) {
+    if(nums.size() < 2)
+        return;
+    
+    for(int i = 1; i < nums.size(); ++i) {
+        int insertValue = nums[i];
+        int insertIndex = binarySearch(nums, 0, i - 1, insertValue);
+        // 移动元素
+        for(int j = i - 1; j >= insertIndex; --j) {
+            nums[j + 1] = nums[j];
+        }
+        // 插入  
+        nums[insertIndex] = insertValue;
+    }  
+    return;
+}
+
+
+
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    insertSort(nums);
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+    cout << endl;
+}  
+```
