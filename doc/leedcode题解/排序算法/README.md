@@ -331,3 +331,75 @@ int main()
     cout << endl;
 }  
 ```
+
+## 4.shellSort 希尔排序  
+
+* 对简单插入排序的一种优化  
+* 希尔增量gap 初始化 gap = n / 2;  gap每次折半，直到 gap 为 1，继续一次简单插入排序后结束  
+* **注意：希尔排序的gap，既表示：间隔gap的元素为一组，也表示总共有gap组**
+* 例如下图   gap初始化为5，表示第一次需要对5组数据分别进行排序 
+* 能快速写出代码的关键在于，先把简单插入排序写熟练！ 然后理解希尔排序的基本步骤和记住希尔增量的更新方式，注意分组排序时是对有gap间隔的元素排序  
+    
+![image](https://user-images.githubusercontent.com/58176267/181150282-75063a1e-e79f-4bf5-8ee9-dc1102b6aea8.png)
+
+```cpp
+#include <vector>  
+#include <iostream>
+
+using namespace std;  
+  
+void swap(vector<int>& nums, int i, int j)
+{
+    if(i == j)return;
+    nums[i] ^= nums[j];
+    nums[j] ^= nums[i];
+    nums[i] ^= nums[j];
+    return;
+}
+
+void shellSort(vector<int>& nums) {
+    if(nums.size() < 2)
+        return;
+    int n = nums.size();
+    // 希尔增量 增量初始化为 n / 2  之后每次折半，知道gap = 1，进行一次简单插入排序后结束  
+    for(int gap = n / 2; gap > 0; gap /= 2) {
+        // 在希尔增量为gap时，表示需要对gap组数据分别进行插入排序
+        for(int start = 0; start < gap; ++start) {
+            // 对于每一组要排序的，start就是起始元素下标 比如 8 9 1 7 2 3 5 4 6 0 
+            // gap为5时，共有5组需要排序，5组的起始下标分别是0,1,2,3,4 
+            // 对于其中一组，简单插入排序 比如第一轮中，对第一组 8 3 排序  或者第二组9 5排序
+            // 也就是要从该组的第二个元素开始，遍历整个该组的元素
+            for(int i = start + gap; i < n; i += gap) {
+                int insertValue = nums[i];
+                int j = i - gap;
+                // 与该组前面已经排序好的数组依次比较，找到插入位置  
+                for(; j >= 0; j -= gap) {
+                    if(nums[j] > insertValue) {
+                        nums[j + gap] = nums[j];
+                    } else break;
+                }
+                nums[j + gap] = insertValue;
+            }
+
+        }
+    }
+    return;
+}
+
+
+
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    shellSort(nums);
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+    cout << endl;
+}  
+```
+
+
+
