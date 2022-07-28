@@ -212,16 +212,6 @@ int main()
 #include <iostream>
 
 using namespace std;  
-  
-void swap(vector<int>& nums, int i, int j)
-{
-    if(i == j)return;
-    nums[i] ^= nums[j];
-    nums[j] ^= nums[i];
-    nums[i] ^= nums[j];
-    return;
-}
-
 
 void insertSort(vector<int>& nums) {
     if(nums.size() < 2)
@@ -243,7 +233,6 @@ void insertSort(vector<int>& nums) {
   
     return;
 }
-
 
 
 int main()  
@@ -274,16 +263,6 @@ int main()
 #include <iostream>
 
 using namespace std;  
-  
-void swap(vector<int>& nums, int i, int j)
-{
-    if(i == j)return;
-    nums[i] ^= nums[j];
-    nums[j] ^= nums[i];
-    nums[i] ^= nums[j];
-    return;
-}
-
 
 int binarySearch(const vector<int> &nums, int start, int end, int target) {
     int left = start, right = end;
@@ -317,8 +296,6 @@ void insertSort(vector<int>& nums) {
     return;
 }
 
-
-
 int main()  
 {  
     vector<int> nums = {4,6,2,1,7,9,5,8,3};
@@ -348,15 +325,6 @@ int main()
 
 using namespace std;  
   
-void swap(vector<int>& nums, int i, int j)
-{
-    if(i == j)return;
-    nums[i] ^= nums[j];
-    nums[j] ^= nums[i];
-    nums[i] ^= nums[j];
-    return;
-}
-
 void shellSort(vector<int>& nums) {
     if(nums.size() < 2)
         return;
@@ -387,7 +355,6 @@ void shellSort(vector<int>& nums) {
 }
 
 
-
 int main()  
 {  
     vector<int> nums = {4,6,2,1,7,9,5,8,3};
@@ -404,7 +371,68 @@ int main()
 
 ## 5.mergeSort 归并排序  
 
-* 
+
+### 自顶向下 非原地  
+
+```cpp
+#include <vector>  
+#include <iostream>
+
+using namespace std;  
+
+void merge(vector<int>& nums, vector<int>& temp, int leftPos, int leftEnd, int rightEnd) {
+    int rightPos = leftEnd + 1;
+    int leftIndex = leftPos, rightIndex = rightPos;
+    int tmpIndex = leftPos;
+
+    while(leftIndex <= leftEnd || rightIndex <= rightEnd) {
+        while(leftIndex <= leftEnd && rightIndex <= rightEnd) {
+            if(nums[leftIndex] <= nums[rightIndex]) {
+                temp[tmpIndex++] = nums[leftIndex++];
+            } else {
+                temp[tmpIndex++] = nums[rightIndex++];
+            }
+        }
+        while(leftIndex <= leftEnd) {
+            temp[tmpIndex++] = nums[leftIndex++];
+        }
+        while(rightIndex <= rightEnd) {
+            temp[tmpIndex++] = nums[rightIndex++];
+        }
+    }
+    
+    // 将数据拷贝回原数组  
+    for(int i = leftPos; i <= rightEnd; ++i) {
+        nums[i] = temp[i];
+    }
+    return;
+}
+
+void mergeSort(vector<int>& nums, vector<int>& temp, int start, int end) {
+    // 要排序区间小于等于1个元素，直接返回 已经是有序的了  
+    if(start >= end)
+        return;
+    int mid = start + (end - start) / 2;
+    mergeSort(nums, temp, start, mid);
+    mergeSort(nums, temp, mid + 1, end);
+    merge(nums, temp, start, mid, end);
+}
+
+
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    vector<int> temp(nums.size());
+    
+    mergeSort(nums, temp, 0, nums.size() - 1);
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+    cout << endl;
+}  
+```
 
 
 
