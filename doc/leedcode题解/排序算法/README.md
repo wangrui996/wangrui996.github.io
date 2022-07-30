@@ -436,8 +436,97 @@ int main()
 
 ### 自低向上 非原地  
 
-```cpp
+* 递归方法是先拆成两组，对每一组各自调用排序函数排序后合并，这样不断递归下去，最终对单个数排序后(单个数不用排，递归终止条件)，先是一一合并，然后两两合并，一直到两组合并后结束  
+* 非递归方法就是直接先一一合并，然后两两合并，最后两组合并
+* 由于最开始单个元素不需要合并，因此定义一个变量 gap，记录每次合并时，区间左右两边各有多少元素，初始化为1，表示第一次是两两一组合并，之后每次gap *= 2;  那gap到什么为止呢？**注意：gap的含义是要合并的大区间中，左右两侧各几个元素，但是如果数组元素总个数n，不是2的次幂，会出现左右子区间数量不同的情况，因此不能让 gap <= n / 2， 而是 gap < n**
+    * 例如，4,3,5,6,3,5 这个数组， gap为1时 排序后是 3,4,5,6,3,5  gap *= 2 变成4  此时仍需要对 3,4,5,6 和 3,5两个子区间合并 但是 如果按照gap <= n / 2，此时不满足，就不会继续合并了 而按照 gap < n 满足条件并合并后 数组为 3,3,4,5,5,6  gap *= 2后变为8 不再满足  
 
+* **综上，这里的gap最好按这样理解：gap是要合并的大区间中，左侧子区间的元素个数，这样，当gap等于n时，表示要合并的区间左侧子区间有n个元素，表明要对一个数组合并，是没必要的，也就是可以直接结束了，而当gap小于n时，比如gap等于n - 1，表示要合并的大区间，左侧范围是[0, n - 2]共n个元素，右侧区间是下标n - 1这一个元素，比如数组元素n = 3，gap = 2时仍要合并，而不是截止到gap = 3 / 2 = 1**
+
+* 每一轮合并时可能要对好多个区间合并，起始位置i肯定是从0开始，合并完之后，i应该加上gap * 2，移动到下一组位置继续合并两个子区间，当i移动到整个数组的末尾(新的要合并的区间只有一个元素)或者越界，就不再合并    
+    * 比如 4,6,2,1,7,9,5,8,3   gap = 1 时， 内层循环i从0开始，合并完4,6  i += 2 * gap 变成2 新的要合并的区间起始位置变成了2...
+
+
+* 因此，外层可以用while循环或者for循环控制，gap从1开始每次扩大2倍，直到其大于等于n()
+
+
+```cpp
+#include <vector>  
+#include <iostream>
+
+using namespace std;  
+
+void merge(vector<int>& nums, vector<int>& temp, int leftPos, int leftEnd, int rightEnd) {
+    
+    // 主要针对最后一组可能不能保证合并大区间左右两侧都正好为gap个数据
+    // 如果要合并区间，只有左子区间，不需要合并直接返回
+    // 也可以在mergeSort函数内循环中，leftBorder < end 改为 leftBorder < end - gap 一样的，都是为了使得，如果最后几个元素不够gap个就不需要排序了
+    if(leftPos >= nums.size() || leftEnd >= nums.size())return;
+    // 如果要合并区间，左右子区间都存在，此时左子区间一定有gap个数据，但是右子区间不一定够；
+    // 比如 最后三个元素是 5,4,2  需要合并5,4和2 如果只按排序算法中计算的结果，此时rightEnd已经越界  
+    // 这里多加个判断，帕西算法计算左右子区间边界时不需要额外考
+    // 当然也可以直接在调用merge的地方，最后一个参数传入 min(leftBorder + 2 * gap - 1, nums.size() - 1)
+    if(rightEnd >= nums.size())rightEnd = nums.size() - 1; 
+    
+    int rightPos = leftEnd + 1;
+    int leftIndex = leftPos, rightIndex = rightPos;
+    int tmpIndex = leftPos;
+
+    while(leftIndex <= leftEnd || rightIndex <= rightEnd) {
+        while(leftIndex <= leftEnd && rightIndex <= rightEnd) {
+            if(nums[leftIndex] <= nums[rightIndex]) {
+                temp[tmpIndex++] = nums[leftIndex++];
+            } else {
+                temp[tmpIndex++] = nums[rightIndex++];
+            }
+        }
+        while(leftIndex <= leftEnd) {
+            temp[tmpIndex++] = nums[leftIndex++];
+        }
+        while(rightIndex <= rightEnd) {
+            temp[tmpIndex++] = nums[rightIndex++];
+        }
+    }
+    
+    // 将数据拷贝回原数组  
+    for(int i = leftPos; i <= rightEnd; ++i) {
+        nums[i] = temp[i];
+    }
+    return;
+}
+
+void mergeSort(vector<int>& nums, vector<int>& temp, int start, int end) {
+    // 要排序区间小于等于1个元素，直接返回 已经是有序的了  
+    if(start >= end)
+        return;
+    
+    int gap = 1;
+    for(; gap < nums.size(); gap *= 2) {
+        for(int leftBorder = 0; leftBorder < end; leftBorder += 2 * gap) {
+            // leftBorder：要合并区间的左边界，每一轮都是从0开始，每次加上2倍gap  
+            // 左子区间元素个数为 gap 因此左子区间结束位置为 leftBorder + gap - 1;
+            // 右子区间起始位置leftBorder + gap，结束位置是 leftBorder + 2 * gap - 1;
+            //cout << "left:" << leftBorder << endl;
+            merge(nums, temp, leftBorder, leftBorder + gap - 1, leftBorder + 2 * gap - 1);
+        }
+    }
+}
+
+
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    //vector<int> nums = {4,3,2,1,5};
+    vector<int> temp(nums.size());
+    
+    mergeSort(nums, temp, 0, nums.size() - 1);
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+    cout << endl;
+}  
 ```
 
 
