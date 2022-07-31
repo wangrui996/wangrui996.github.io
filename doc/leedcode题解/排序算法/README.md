@@ -602,7 +602,64 @@ int main()
 
 
 ```cpp
+#include <vector>  
+#include <stack>
+#include <iostream>
+#include <algorithm>
 
+using namespace std;  
+
+int partition(vector<int>& nums, int start, int end) {
+    if(start >= end)return start;
+    
+    int leftIndex = start, rightIndex = end;
+    int pivot = nums[start];
+    while(leftIndex < rightIndex) {
+        while(leftIndex < rightIndex && nums[rightIndex] >= pivot)rightIndex--;
+        while(leftIndex < rightIndex && nums[leftIndex] <= pivot)leftIndex++;
+        swap(nums[leftIndex], nums[rightIndex]);
+    }
+    swap(nums[start], nums[leftIndex]);
+    return leftIndex;
+}
+
+
+void quickSort(vector<int>& nums, int start, int end) {
+    if(start >= end)return;
+    stack<int> stk;
+    stk.push(end);
+    stk.push(start);
+    while(!stk.empty()) {
+        int left = stk.top();
+        stk.pop();
+        int right = stk.top();
+        stk.pop();
+        int pivotIndex = partition(nums, left, end);
+        // 注意先判断下左右子区间是否最少含有一个数据，再入栈
+        if(left <= pivotIndex - 1) {
+            stk.push(pivotIndex - 1);
+            stk.push(left);
+        }
+        if(right >= pivotIndex + 1) {
+            stk.push(right);
+            stk.push(pivotIndex + 1);
+        }
+    }
+}
+
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3,3,0};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    //vector<int> nums = {4,3,2,1,5};
+    
+    quickSort(nums, 0, nums.size() - 1);
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+    cout << endl;
+}  
 ```
 
 
