@@ -533,8 +533,77 @@ int main()
 ## quickSort 快排
 
 
+### 递归快排
+
+* partition 分区方法 是核心，执行该算法后，主轴左侧元素都小于等于主轴元素，主轴右侧元素都大于等于主轴元素  
+* 注意：不管采用什么方法选择了基准数，我们都会把基准数放在要排序区间的最左端；
+* 设置两个哨兵left和right初始化分别在要排序数组的左右两端，先移动右哨兵，找到第一个小于基准数的位置(注意基准数在最左端，因此先移动右哨兵，原因看后面)；然后移动左哨兵，找到第一个大于基准数的元素，之后交换左右哨兵位置的元素;  这样，在循环过程中，左哨兵left以及其左侧元素均小于等于基准数，右哨兵及其右侧元素，均大于等于基准数  
+* 当某次移动过程中，不管移动左还是右哨兵时发现左右哨兵相遇了，说明：此时查找完毕，具体看下：
+    * 如果右哨兵在向左移动过程中停下来，要么是找到了小于基准数的位置，要么是到了左哨兵left的位置
+    * 如果左哨兵向右移动过程停下来，要么是找到了大于基准数的位置，要么是到了右哨兵的right的位置
+    * 因此，左右哨兵的移动过程中除了设置与基准数比较的条件外还要设置left和right的比较，另外整个大循环也是由left < right控制 
+    * 当右哨兵，左哨兵查找完毕，直接交换他们对应位置元素，不会有问题，即使此时left == right  
+    * 当发现left == right，循环会结束，此时，交换哨兵位置元素与基准数即可，因为该位置元素小于基准数，下面看下为什么
+        * 假设是右哨兵right向左移动过程(寻找小于基准数的过程)，移动到了left位置，此时该位置元素小于基准数(因为left位置在上次交换后还没动，一定是小于基准数的)  
+        * 假设是左哨兵left向右移动过程中(寻找大于基准数的过程)，移动到了right的位置，此时，由于左哨兵移动前右哨兵已经移动了！所以相遇位置一定是右哨兵找到的那个小于基准数的位置！ 这就是为什么升序排序，基准数在左端时，我们每次都是先移动右哨兵的原因。
+
+* 注意：代码中，左右哨兵分别从排序区间的左右边界开始  
+
+* 稳定性：不稳定  
+    * 例如 7 2 4 4 8 9   第一次排序后，4 2 4 7 8 9 第一个4是原数组下标为3的那个4，进一步排序后，会发现，最终两个4的相对关系被破坏  
+    
+* 复杂度：如果每次都选排序区间左侧值作为基准数，假设原数组基本有序(不管升序还是降序),原本希望的O(logn)的复杂度变为O(n)，总的时间复杂度退化成O(n^2)  
+
+* 改进：基准数选择为，左右边界，和中间元素的中位数   
+
+```cpp
+#include <vector>  
+#include <iostream>
+#include <algorithm，，，，，，，，
+
+using namespace std;  
+
+void quickSort(vector<int>& nums, int start, int end) {
+    // 要排序区间小于等于1个元素，直接返回 已经是有序的了
+    if(start >= end)return;
+    
+    int leftIndex = start, rightIndex = end;
+    int pivot = nums[start];
+    while(leftIndex < rightIndex) {
+        while(leftIndex < rightIndex && nums[rightIndex] >= pivot)rightIndex--;
+        while(leftIndex < rightIndex && nums[leftIndex] <= pivot)leftIndex++;
+        swap(nums[leftIndex], nums[rightIndex]);
+    }
+    swap(nums[start], nums[leftIndex]);
+   
+    quickSort(nums, start, leftIndex - 1);
+    quickSort(nums, leftIndex + 1, end);
+   
+}
 
 
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    //vector<int> nums = {4,3,2,1,5};
+    
+    quickSort(nums, 0, nums.size() - 1);
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+    cout << endl;
+}  
+```
+
+### 非递归快排  
+
+
+
+```cpp
+
+```
 
 
 ## heapSort 堆排序  
