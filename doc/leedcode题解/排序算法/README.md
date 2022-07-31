@@ -6,7 +6,6 @@
 [10大排序算法总结](https://www.runoob.com/w3cnote/ten-sorting-algorithm.html)  
 
 
- 
 ## 1.bubbleSort 冒泡排序  
 
 * 更新边界 + 提前结束   优化  
@@ -599,8 +598,6 @@ int main()
 
 ### 非递归快排  
 
-
-
 ```cpp
 #include <vector>  
 #include <stack>
@@ -662,6 +659,73 @@ int main()
 }  
 ```
 
+
+### 双轴快排  
+
+[双轴快排图解](https://www.cnblogs.com/bigsai/p/13930945.html)  
+
+* pivot1 和 pivot2 两个主轴，**同时要保证 pivot1 <= pivot2** ,一般选择初始化 pivot1 = nums[start]  pivot2 = nums[end] 
+* 算法步骤：
+    * 设要排序区间为 [start, end]   
+    * 1.设置三个循环不变量 lower， k， upper    lower用于推进pivot1    upper用于推进pivot2  
+        * 任意时刻：
+        * 区间 [start, lower] 元素均小于等于 nums[start]    lower初始化为 start即可
+        * 区间 [upper, end] 元素均大于等于   nums[end]      upper初始化为end
+        * 区间 (lower, k)  元素均 大于nums[start], 且小于nums[end] 
+        * 区间 [k, upper) 内元素为待比较元素  初始化k = start + 1 
+    * 2. 遍历k 
+        *   
+        
+```cpp
+#include <vector>  
+#include <stack>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;  
+
+void quickSort(vector<int>& nums, int start, int end) {
+    if(start >= end)
+        return;
+    
+    if(nums[start] > nums[end])
+        swap(nums[start], nums[end]);
+    
+    int lower = start;
+    int k = start + 1;
+    int upper = end;
+    
+    while(k < upper) {
+        if(nums[k] <= nums[start]) {  // 在左侧区间情况
+            swap(nums[k++], nums[++lower]);
+        } else if(nums[k] > nums[start] && nums[k] < nums[end]) { // 在中间的情况
+            k++;
+        } else if(nums[k] >= nums[end]) {  // 右侧的情况
+            swap(nums[k], nums[--upper]);
+        }   
+    }
+    swap(nums[start], nums[lower]);
+    swap(nums[end], nums[upper]);
+    quickSort(nums, start, lower - 1);
+    quickSort(nums, lower + 1, upper - 1);
+    quickSort(nums, upper + 1, end);
+}
+
+
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3,3,0,32,43,5,6,7,3,2,3,4};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    //vector<int> nums = {4,3,2,1,5};
+    
+    quickSort(nums, 0, nums.size() - 1);
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+    cout << endl;
+}  
+```
 
 ## heapSort 堆排序  
 
