@@ -667,14 +667,19 @@ int main()
 * pivot1 和 pivot2 两个主轴，**同时要保证 pivot1 <= pivot2** ,一般选择初始化 pivot1 = nums[start]  pivot2 = nums[end] 
 * 算法步骤：
     * 设要排序区间为 [start, end]   
-    * 1.设置三个循环不变量 lower， k， upper    lower用于推进pivot1    upper用于推进pivot2  
+    * 设置三个循环不变量 lower， k， upper    lower用于推进pivot1    upper用于推进pivot2  
         * 任意时刻：
         * 区间 [start, lower] 元素均小于等于 nums[start]    lower初始化为 start即可
         * 区间 [upper, end] 元素均大于等于   nums[end]      upper初始化为end
         * 区间 (lower, k)  元素均 大于nums[start], 且小于nums[end] 
         * 区间 [k, upper) 内元素为待比较元素  初始化k = start + 1 
-    * 2. 遍历k 
-        *   
+    * 遍历k 
+        * 如果  nums[k] <= nums[start] 需要将其放在左侧区间，根据循环不变量的定义，可以先将lower加1，然后交换nums[k]与nums[lower], 最后将k增加1 此时仍然满足上面定义  
+        * 如果  nums[k] > nums[start] && nums[k] < nums[end] 也就是在中间区间，直接将 k++ 即可  
+        * 如果  nums[k] >= nums[end]， nums[k]应该处于最右侧区间，由于此时 nums[upper]元素一定大于等于nums[end]，因此，可以先将upper减1，然后交换 nums[k]与nums[upper]，注意，交换后，不能将k++，因为交换过来的元素原先处于未判断区间  
+
+* 另外注意，在将此代码做leedcode912排序时，有一个测试用例数据量为50000，且是升序排好的，超时，也发生了退化  可以改进，用随机数  假设要排序的区间为[start, end],选择一个下标在该区间的方法： int i = rand() % (end - start + 1) + start  
+
         
 ```cpp
 #include <vector>  
