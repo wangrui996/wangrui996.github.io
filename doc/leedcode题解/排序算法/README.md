@@ -734,7 +734,59 @@ int main()
 
 ## heapSort 堆排序  
 
-* 
+* 完全二叉树：假设根节点从0开始(用数组表示时与数组下标统一)，某个节点下标为i，则其左孩子下标为 2i + 1  右孩子下标为 2i + 1  其父节点下标为 (i - 1) / 2;  
+
+```cpp
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        if(nums.size() <= 1)
+            return nums;
+        // 构建大顶堆  (升序排列) 
+        heapify(nums);
+        // 构造升序序列， 逐次将第一个元素与后面已经排序好的元素的前一个元素交换位置，然后重新对被交换过去的元素执行siftDown操作  
+        // 由于堆顶每次都是nums[0], 因此这里用 i 记录未排序序列中最后一个元素的下标，也就是从后往前，依次需要交换到堆顶的元素下标
+        for(int i = nums.size() - 1; i > 0; --i) { // 循环到1结束即可，后面所有元素都排序好，第一个元素也是有序的，这里大于0还是大于等于0都无所谓  
+            // 交换堆顶和当前未排序序列的最后一个元素
+            swap(nums[0], nums[i]);
+            siftDown(nums, 0, i - 1); // 执行完swap后，当前未排序序列范围是[0, i - 1]; 因此执行siftDown时，超出此范围的不管
+        }
+
+        return nums;
+    }
+
+private:
+    // 构建大顶堆  本质上是从下至上对所有的非叶子节点执行siftDown操作 
+    void heapify(vector<int>& nums) {
+        int n = nums.size();
+        // 最后一个节点下标为n - 1 则其父节点，也就是最后一个非叶子节点下标为 (n - 1 - 1) / 2;
+        // 最后一个非叶子节点前面的所有节点，肯定都有孩子节点，因此都需要执行siftDown操作  
+        for(int i = (n - 2) / 2; i >= 0; --i) {
+            siftDown(nums, i, n - 1);
+        }
+    }
+    // index 表示要siftDown的节点，endIndex表示只对索引为[0, endIndex]的节点有效 无论是index还是其孩子
+    void siftDown(vector<int>& nums, int index, int endIndex) {
+        int maxChildIndex = index * 2 + 1; // 要siftDown的节点的最大的那个孩子的索引, 先初始化为左孩子索引
+        while(maxChildIndex <= endIndex) {  // 左孩子在该范围内才进行比较
+            // 判断有没有右孩子，有的话选出那个较大的孩子节点来  
+            if(maxChildIndex + 1 <= endIndex && nums[maxChildIndex + 1] > nums[maxChildIndex]) {
+                maxChildIndex++;
+            }
+            // 父节点与较大的孩子比较
+            if(nums[index] > nums[maxChildIndex]) { // 父节点大于两个孩子节点，该节点的位置已经调整完毕 直接返回
+                return;
+            } else {
+                swap(nums[index], nums[maxChildIndex]);
+                // 注意：对索引为index的节点执行siftDown，如果该节点发生了交换，那需要继续跟随它往下走，一直沉到无法再沉为止 
+                index = maxChildIndex;
+                maxChildIndex = index * 2 + 1;
+            }
+        }
+    }
+
+};
+```
 
 
 
