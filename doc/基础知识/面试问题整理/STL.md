@@ -1,6 +1,11 @@
 # STL   
 
 
+
+* [list为什么不能使用标准库的sort函数而只能使用自己带的sort成员函数进行排序](#list为什么不能使用标准库的sort函数而只能使用自己带的sort成员函数进行排序)  
+
+
+
 ## vector 和 list 的区别  
 
 ### vector
@@ -187,4 +192,14 @@ vec capacity：100  vec size: 100
 
 
 ## map 和 unordered_map 的时间复杂度  
+
+
+
+<p id="list为什么不能使用标准库的sort函数而只能使用自己带的sort成员函数进行排序"></p>      	
+		
+## list为什么不能使用标准库的sort函数而只能使用自己带的sort成员函数进行排序  
+
+
+
+
 
