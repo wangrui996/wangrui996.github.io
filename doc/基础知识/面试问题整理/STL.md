@@ -6,6 +6,8 @@
 
 * [比较大小max](#比较大小max)  
 
+* [一个vector赋值给另一个vector](#一个vector赋值给另一个vector)  
+
 ## vector 和 list 的区别  
 
 ### vector
@@ -211,5 +213,14 @@ vec capacity：100  vec size: 100
 	* 比如可以比较实际的字符串大小  
 
 ![image](https://user-images.githubusercontent.com/58176267/183248000-ec0fff01-6ce8-44fd-b2d3-0dd198e7804d.png)
+
+
+<p id="一个vector赋值给另一个vector"></p>      	
+		
+## 一个vector赋值给另一个vector  
+
+* 注意swap是交换，会交换两个数组元素 
+
+![image](https://user-images.githubusercontent.com/58176267/183253000-581dbfbd-6e20-4c85-9dc0-138847d6b122.png)
 
 
