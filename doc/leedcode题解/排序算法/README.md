@@ -792,6 +792,129 @@ private:
 
 ## countSort 计数排序  
 
-* 
+* 计数排序是一种非比较排序  **通常适用于整数数组**
+    * 最基本的想法，选出做大的数max，创建一个数组temp大小为max + 1 这样如果一个元素的值是x，那就将temp[x]++
+    * 问题是这样无法放小数，而且假设最大值为max，但是最小值是max - 1 这样实际是只需要空间为2的数组即可，不需要max + 1  当max比较大，但数据都比较靠近max时，造成空间浪费
+* 算法流程：
+    * 创建一个数组，大小为原数组最大值 - 原数组最小值 + 1    因为是整数，假设从min 到 max之间任意一个整数都在数组中的话，数据范围是 max - min + 1
+    * 遍历每一个元素x，其位置应该在  x - min    也就是所创建的数组 temp，其下标 index处放的是值为 min + index 的元素的数量  
+    * 将temp数组中元素拿出，放回原数组
+
+* 非稳定排序
+
+```cpp
+#include <vector>  
+#include <stack>
+#include <iostream>
+#include <algorithm>
+#include <climits>
+
+using namespace std;  
+
+void countSort(vector<int>& nums) {
+    int maxValue = INT_MIN, minValue = INT_MAX;
+    for(int tmp : nums) {
+        maxValue = maxValue > tmp ? maxValue : tmp;
+        minValue = minValue < tmp ? minValue : tmp;
+    }
+    
+    vector<int> temp(maxValue - minValue + 1);
+    
+    for(int i = 0; i < nums.size(); ++i) {
+        temp[nums[i] - minValue]++;
+    }
+    
+    int index = 0;
+    for(int i = 0; i < temp.size(); ++i) {
+        for(int j = 0; j < temp[i]; ++j) {
+            nums[index++] = i + minValue;
+        }
+    }
+    
+}
 
 
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3,3,0,32,43,5,6,7,3,2,3,4};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    //vector<int> nums = {4,3,2,1,5};
+    
+    countSort(nums);
+    
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+    
+    cout << endl;
+    
+}  
+```
+
+* 稳定排序  
+    * 上面的做法不是稳定的，因为可能存在几个相同的数字，原本排在后面的，是后来计入到temp中的，导致向原数组放回时，后计入的会先放回(看图) 
+        * 实际上由于只是统计了具有相同值的元素的个数，temp数组的下标index，我们只是知道其对应元素的值为 index + min 假设有x个，我们是不知道这x个的相同元素在原数组中的相对位置的，肯定无法稳定排序
+    * 改进：
+        * 通过上面方法得到temp数组后，再计算一个sumTemp，计算temp数组的前缀和 
+        * 假设 原数组 {1, 1, 4, 4, 5, 5}, max = 5, min = 1  创建一个temp数组大小为 5 - 1 + 1 = 5
+        * temp 数组为 {2， 0， 0， 2， 2}  那么 sumTemp = {2, 2, 2, 4, 6} 其意义是什么呢：sumTemp数组中，下标为index的元素实际值为 index + min,其在排序后的数组中的最大位置是 sumTemp[index] - 1;  以元素4为例，sumTemp[4 - 1] = 4 说明截止到最后一个4，前面一共有4个元素(算上自己)，因此最后一个4所在位置应该在3  
+        * 有了上述信息后，实现稳定排序，只需要倒序遍历原数组nums，对于遇到的每一个元素x, 去sumTemp中查找其排序后的所在位置，即sumTemp[x - min]  然后将sumTemp[x - min]减1  
+
+```cpp
+#include <vector>  
+#include <stack>
+#include <iostream>
+#include <algorithm>
+#include <climits>
+
+using namespace std;  
+
+void countSort(vector<int>& nums) {
+    int maxValue = INT_MIN, minValue = INT_MAX;
+    for(int tmp : nums) {
+        maxValue = maxValue > tmp ? maxValue : tmp;
+        minValue = minValue < tmp ? minValue : tmp;
+    }
+    
+    vector<int> count(maxValue - minValue + 1);
+    
+    for(int i = 0; i < nums.size(); ++i) {
+        count[nums[i] - minValue]++;
+    }
+    
+    // 前缀和
+    vector<int> sumCount(count.size());
+    int sum = 0;
+    for(int i = 0; i < count.size(); ++i) {
+        sum += count[i];
+        sumCount[i] = sum;
+        
+    }
+    
+    vector<int> sortNums(nums.size());
+    for(int i = nums.size() - 1; i >= 0; --i) {  // 注意需要倒序遍历，保证稳定
+        sortNums[sumCount[nums[i] - minValue] - 1] = nums[i];
+        sumCount[nums[i] - minValue]--;
+    }
+    
+    nums.assign(sortNums.begin(), sortNums.end());
+    //nums.swap(sortNums); // 也可以但交换后 sortNums就变成了nums
+}
+
+
+int main()  
+{  
+    vector<int> nums = {4,6,2,1,7,9,5,8,3,3,0,32,43,5,6,7,3,2,3,4};
+    //vector<int> nums = {1,2,3,4,5,6,7,8,9};
+    //vector<int> nums = {9,8,7,6,5,4,3,2,1};
+    //vector<int> nums = {4,3,2,1,5};
+    
+    countSort(nums);
+    for(int temp : nums) {
+        cout << temp << " ";
+    }
+
+    cout << endl;    
+}  
+```
