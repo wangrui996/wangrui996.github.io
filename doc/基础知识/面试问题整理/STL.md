@@ -4,7 +4,7 @@
 
 * [list为什么不能使用标准库的sort函数而只能使用自己带的sort成员函数进行排序](#list为什么不能使用标准库的sort函数而只能使用自己带的sort成员函数进行排序)  
 
-
+* [比较大小max](#比较大小max)  
 
 ## vector 和 list 的区别  
 
@@ -200,5 +200,16 @@ vec capacity：100  vec size: 100
 ## list为什么不能使用标准库的sort函数而只能使用自己带的sort成员函数进行排序  
 
 * sort源码中，有对迭代器进行加减，除法等操作，需要的是一个随机访问迭代器，比如可以支持加5，减5，除以2这种类似一次跨越一段内存的操作； 而list，它在内存中不连续，只能一个节点，一个节点的访问下去，因此无法提供上面算法要求的那种迭代器； 所以只能使用自己的sort成员进行排序  
+
+<p id="比较大小max"></p>      	
+		
+## 比较大小max  
+
+* max函数重载版本1，只传入两个参数，调用的重载版本的内部实现是 return a < b ? b : a; 
+	* std::cout << max(string("zoo"), string("hello")) << std::endl;  输出为 zoo   这里就需要去看下string这个类型，对于 < 是怎样定义的  比的是字典序  
+* max函数重载版本2，使用自定义比较函数，会使用 comp(a, b) ? b : a
+	* 比如可以比较实际的字符串大小  
+
+![image](https://user-images.githubusercontent.com/58176267/183248000-ec0fff01-6ce8-44fd-b2d3-0dd198e7804d.png)
 
 
