@@ -1,0 +1,260 @@
+<p id="地图分析"></p>
+
+# 1162. 地图分析 
+
+[力扣题目链接](https://leetcode.cn/problems/as-far-from-land-as-possible/)  
+
+
+
+
+## 树和图的bfs区别：
+
+* 1.**tree只有1个root，而图可以有多个源点，所以首先需要把多个源点都入队。(如果有的话)**
+* 2.**tree是有向的因此不需要标志是否访问过，而对于无向图来说，必须得标志是否访问过!**
+    * **并且为了防止某个节点多次入队，需要在入队之前就将其设置成已访问！这一个细节尤为重要，不能等到访问到某个节点时，才标记其为已访问，这样很有可能访问某一层节点时，对某一个节点重复入队**  
+
+* 3，树中节点除了值，还有指针，因此一般定义结构体，用链表方式表示； 在二维矩阵的图中，每个节点用x，y坐标值表示即可，可以用一个大小为2的数组，但这里为了和树的节点统一，也定义成结构体；
+
+
+## 方法1 bfs   
+
+* 针对每一个海洋格子，使用bfs搜索最近的陆地，并计算曼哈顿距离  
+* bfs搜索过程中，不需要队列为空才结束，只要找到一个陆地即可结束   
+
+
+* 时间复杂度：最多进行n^2次bfs，对于每一次bfs，最坏情况是没有陆地，也就是需要比遍历完n^2 - 1个海洋区域，因为使用了visited数组，确保了单次bfs中，每个格子只能访问一次，因此单次bfs渐进时间复杂度是O(n^2)
+    * 所以总的渐进时间复杂度是O(n^4)
+
+* 算法在几个测试用例上超时  
+
+* **注意：在while循环中，每一次先计算了队列的大小，然后循环从队首取出节点，再访问；这样做好处是能一次得到所有除以同一层的节点，便于理解bfs的访问结构**
+    * 对于每个访问的节点，对其进行操作以后，需要将其上下左右四个邻居中未被访问的节点继续加到队列中   
+    * 之前对于树的层序遍历这么写是为了将同一层的元素放到一个数组
+    * 实际上对于图的bfs，在不需要得到同一层的所有节点的时，完全可以进入while循环后，直接取队首节点，然后访问，并将其四个邻居节点中给未访问的入队
+    * 两种写法实际上对于节点的访问顺序没有任何变化，代码量上也不会差别太多  
+
+```cpp
+class Solution {
+public:
+    
+    static constexpr int dx[4] = {-1, 0, 0, 1}, dy[4] = {0, -1, 1, 0};
+
+    struct Node {
+        int x, y;
+    };
+    
+    int findMaxDistence(const vector<vector<int>>& grid, int row, int col) {
+        // 对每一个海洋格子进行bfs时，visited数组元素最开始都应该置为false，表示未访问过  
+        int n = grid.size();
+        vector<vector<bool>> visited(n, vector(n, false));
+        if(!inArea(grid, row, col))
+            return 0;
+        if(grid[row][col] != 0)
+            return 0;
+
+        queue<Node> que;
+        Node node = {row, col};
+        
+        que.push(node); // que.push({row, col});
+        // 一定要注意：初始节点也要设置为已访问  
+        visited[row][col] = true;
+
+        while(!que.empty()) {
+            int size = que.size();
+            for(int i = 0; i < size; ++i) {
+                Node newNode = que.front();
+                que.pop();
+                // 这里的newNode是上一层被放进来的，一定放的是未被访问过的节点，且越界的我们也没放进来
+                // 判断该节点是否是陆地，是的话，就找到了离(row, col)这个海洋最近的陆地，直接计算曼哈顿距离并返回即可
+                if(grid[newNode.x][newNode.y] == 1) {
+                    return abs(newNode.x - row) + abs(newNode.y - col);
+                } else {
+                    // 该节点是海洋，将其未访问过的邻居节点加入到队列(只要未范围跟过，不管陆地还是海洋，放进来后下一层去访问)  
+                    // 这里为了方便得到某个节点的四个邻居节点，使用dx，dy数组定义其在x，y方向上的增量(便于扩展)，就不需要一个一个if语句了
+                    for(int i = 0; i < 4; ++i) {
+                        int nx = newNode.x + dx[i], ny = newNode.y + dy[i];
+                        // 这个点必须没有没访问过，才可以加到队列中  
+                        if(inArea(grid, nx, ny) && !visited[nx][ny]) {
+                            // 注意：为了防止某一个节点被重复入队，需要在入队前就标记为已访问 ！
+                            visited[nx][ny] = true;
+                            que.push({nx, ny});
+                        }
+                    }
+                }
+            }
+        }
+        // bfs完了还没找到陆地，说明没有陆地
+        return -1;
+    }
+  
+    int maxDistance(vector<vector<int>>& grid) {
+        int maxValue = -1;
+        int n = grid.size();
+        for(int row = 0; row < n; ++row) {
+            for(int col = 0; col < n; ++col) {
+                if(grid[row][col] == 0) {
+                    maxValue = max(maxValue, findMaxDistence(grid, row, col));
+                }
+            }
+        }
+
+        return maxValue;
+    }
+
+private:
+    bool inArea(const vector<vector<int>>& grid, int row, int col) {
+        int n = grid.size();
+        return row >=0 && row < n && col >=0 && col < n;
+    }
+};
+```
+
+
+
+## 方法2 多源bfs/多源最短路  
+
+* 方法1 BFS的过程是求最短路的过程，而且是求某一个海洋格子，到最近的陆地区域的最短路  
+* 但这里题目实际要求的是，所有海洋格子，到陆地区域这个【点集】的最短路  
+
+* **算法流程：**
+* 1.将所有陆地入队，然后从各个陆地 同时开始一层一层向海洋扩散(多源bfs)，访问过的节点都做好标记; 
+    * 已经将所有陆地节点加入到了队列中，后续bfs时，搜索到的肯定都是海洋节点  
+* 2.这样搜索下去，当队列为空时，说明整个图搜索完了，在最后一层中被访问的海洋节点，一定有这样的特点：
+    * 最后一层被访问的海洋节点可能不止一个
+    * 从多源陆地开始向外bfs，最有一层的节点 是在整个向外扩散过程中最后被访问，说明它(们)距离陆地最远；
+    * **最后这一层被访问的海洋节点，其中的任意一个，一定是被离它最近的陆地节点扩散到的，理解这一点很重要**
+    * 最后一层被访问的海洋节点中，任意一个节点都有一个共同的属性，那就是它们都是在第k次扩展中被访问的，或者说都是在第k层
+    * 因此，while循环结束后，只需要看最后一个被访问的节点即可，看它是第几层被访问的即可  
+
+    * 由此可以看出，当我们拿到最后一个节点(最后一层任意节点都行只不过最后一个容易拿到)，还需要对它进行bfs以得到离它最近的陆地  
+    * 但如果我们在bfs过程中，对每个访问过的节点，记录它是在第几层访问的，最后可以直接得到曼哈顿距离
+        * 因为如果一个海洋节点实际bfs中是在第i层被访问的(不包括陆地那一层),那它离最近的陆地的曼哈顿距离就是i  
+    * 本来我们就需要标记已经访问过的元素，因此这里我们直接在原数组上标记，将访问过的节点，值改成它所在的层数
+  
+* 3.特殊情况：
+    * 正常情况，返回最后一个访问的节点 newNode 对应的格子的值减1即可
+    * 如果没有陆地，则队列会为空，因此newNode可以初始化为{-1, -1},最后发现还是没变 就返回-1   
+    * 如果没有海洋，所有节点都会入队，然后发现每一个节点的邻居都已经访问(都不是0),遍历下来，newNode就是矩阵最后一个节点，对应的值为1，此时如果减1，得到的是0，题目要求返回-1  
+        * 因此，如果发现最后一个访问的节点值为1，就返回-1
+
+
+* 时间复杂度：每个节点最多访问一次 O(n^2)
+
+```cpp
+class Solution {
+public:
+    
+    static constexpr int dx[4] = {-1, 0, 0, 1}, dy[4] = {0, -1, 1, 0};
+    struct Node {
+        int x, y;
+    };
+    
+    int maxDistance(vector<vector<int>>& grid) {
+        int maxValue = -1;
+        int n = grid.size();
+        
+        queue<Node> que;
+
+        // 所有陆地加入队列 
+        // 加入前应该标记为已访问，这里相当于标记为1了
+        for(int row = 0; row < n; ++row) {
+            for(int col = 0; col < n; ++col) {
+                if(grid[row][col] == 1) {
+                    que.push({row, col});
+                }
+            }
+        }
+        // 为了方便后续计算，我们需要标记每个节点是在第几层被访问的
+        // 同时已经访问过的节点，也需要做标记
+        // 因此这里直接在原数组上进行标记，陆地节点值为1，也表示第一层被访问的节点 
+        // 实际第一层被访问的海洋节点，值修改成2,,最后一层被访问的海洋节点，值为k
+        // 则，根据最后一个被访问节点是第k层被访问的，可得出离它最近的陆地的曼哈顿距离是k - 1(减1是因为实际第一层被访问的海洋节点被标记为了2)
+        int k = 2;
+        Node newNode = {-1, -1};
+        while(!que.empty()) {
+            int size = que.size();
+            // 先访问同一层所有节点，标记其处于的层数(也是标记其访问过了)，同时将每个节点未访问过的邻居放入队列
+            for(int i = 0; i < size; ++i) {
+                newNode = que.front();
+                que.pop();       
+                for(int i = 0; i < 4; ++i) {
+                    int nx = newNode.x + dx[i], ny = newNode.y + dy[i];
+                    // 这个点必须没有没访问过，才可以加到队列中  在这里就是必须要是海洋 0
+                    if(inArea(grid, nx, ny) && grid[nx][ny] == 0) {
+                        // 同一层的节点值都标记为k  
+                        grid[nx][ny] = k;    
+                        que.push({nx, ny});
+                    }
+                }
+            }
+            k++;
+        }
+        
+        if(newNode.x == -1 || grid[newNode.x][newNode.y] == 1)
+            return -1;
+        
+        return grid[newNode.x][newNode.y] - 1;
+    }
+
+private:
+    bool inArea(const vector<vector<int>>& grid, int row, int col) {
+        int n = grid.size();
+        return row >=0 && row < n && col >=0 && col < n;
+    }
+
+};
+```
+
+
+* 加深bfs搜索的理解，改写下：
+
+
+```cpp
+class Solution {
+public:
+    
+    static constexpr int dx[4] = {-1, 0, 0, 1}, dy[4] = {0, -1, 1, 0};
+    struct Node {
+        int x, y;
+    };
+    
+    int maxDistance(vector<vector<int>>& grid) {
+        int maxValue = -1;
+        int n = grid.size();
+        
+        queue<Node> que;
+        // 所有陆地加入队列 
+        // 加入前应该标记为已访问，这里相当于标记为1了
+        for(int row = 0; row < n; ++row) {
+            for(int col = 0; col < n; ++col) {
+                if(grid[row][col] == 1) {
+                    que.push({row, col});
+                }
+            }
+        }
+        Node newNode = {-1, -1};
+        while(!que.empty()) {
+            newNode = que.front();
+            que.pop();  
+            for(int i = 0; i < 4; ++i) {
+                int nx = newNode.x + dx[i], ny = newNode.y + dy[i];
+                // 这个点必须没有没访问过，才可以加到队列中  在这里就是必须要是海洋 0
+                if(inArea(grid, nx, ny) && grid[nx][ny] == 0) {
+                    //  newNode的邻居节点，标记为newNode节点对应值加1，表示在newNode的下一层
+                    grid[nx][ny] = grid[newNode.x][newNode.y] + 1;    
+                    que.push({nx, ny});
+                }
+            }
+        } 
+        if(newNode.x == -1 || grid[newNode.x][newNode.y] == 1)
+            return -1;     
+        return grid[newNode.x][newNode.y] - 1;
+    }
+
+private:
+    bool inArea(const vector<vector<int>>& grid, int row, int col) {
+        int n = grid.size();
+        return row >=0 && row < n && col >=0 && col < n;
+    }
+};
+```
