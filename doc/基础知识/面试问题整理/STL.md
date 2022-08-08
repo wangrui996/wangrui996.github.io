@@ -10,7 +10,9 @@
 
 * [vector的clear](#vector的clear) 
 
-* [vector使用注意事项](vector使用注意事项)
+* [vector使用注意事项](#vector使用注意事项)
+
+* [模板的全特化和偏特化](#模板的全特化和偏特化)
 
 
 ## vector 和 list 的区别  
@@ -244,4 +246,20 @@ vec capacity：100  vec size: 100
 
 
 
+<p id="模板的全特化和偏特化"></p>      	
+		
+## 模板的全特化和偏特化  
 
+* 偏特化有**数量上的**和**范围上的**两层 
+	* 如下面例子，原来泛化版本是可支持传入任意类型，有了偏特化的版本后(这里不能算全特化原因就是没有换成一个特性的类型，而是一个任意类型的指针)，如果传入的模板类型是指针，会用下面这个  
+```cpp
+template<class T> 	
+class Person {
+.....
+};
+
+template<class TP> 	
+class Person<TP*> {
+.....
+};
+```
