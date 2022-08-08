@@ -922,8 +922,68 @@ int main()
 
 # bucketSort 桶排序  
 
-* 
+* 将原数组划分到不同的区间**桶**，对每个桶单独进行排序，之后按桶序和桶内序输出结果  
+* **适用于分布均匀的数据** 
 
+* 算法流程
+
+![image](https://user-images.githubusercontent.com/58176267/183433244-589a7892-8b5a-46cc-9e55-a031482da9eb.png)  
+
+* 稳定性：取决于桶内排序方法的稳定性  
+* 复杂度：
+    * 时间复杂度：找最大最小值O(n), 分配数据到各个桶O(n)，剩下的就是取决于桶内排序算法的时间复杂度  
+
+![image](https://user-images.githubusercontent.com/58176267/183434782-dcf2433c-d7e4-4cc4-ae01-f862e4cca128.png)
+
+
+* 1.求出数组最大最小值maxValue 和 minValue;  
+* 2.设置k个桶，假设设置桶的数量为10，也就是 k = 10;
+    * **数量设置应该遵从什么原则**
+* 3.对于任意一个nums[i]  它应该在哪个桶里？  数据在minValue到maxValue之间，则数据范围长度是 maxValue - minValue + 1;(不一定这个范围内内一个整数都存在，但是我们只能以此确定每个桶的范围) ，桶的数量是k  所以，每一个桶的数据范围大小(间隔)是 interval = (maxValue - minValue + 1) / k;  但是后续interval作为被除数，为了防止其等于0，所以调整下 interval = (maxValue - minValue) / k + 1  不会影响其索引
+    * 注意这里的interval并不是是这个桶后续就装interval 个元素
+    * 对于nums[i] 其应该在索引为 (nums[i] - minValue) / interval 的桶中  
+    * 比如 minValue为0  interval = 30  则 数值 29 应该在索引是0的桶中  
+    * 注意，虽然有n个元素，假设分成k个桶，我们不能假设第一个桶元素范围是0到n / k   这样变成了，最后一个的最大值是n个，但是很显然这个范围我们应该按照最大最小值确定      
+    
+```cpp
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {        
+        if(nums.size() <= 1)
+            return nums;
+        // 求出最大，最小值  
+        int minValue = nums[0], maxValue = nums[0];
+        for(int temp : nums) {
+            minValue = minValue < temp ? minValue : temp;
+            maxValue = maxValue > temp ? maxValue : temp;
+        }       
+        // 创建桶,数量取整个数组的1/3  也可以用别的数量 如求出最大最小值，数量用 (max - min) / nums.size() + 1  
+        // 这里每个桶使用动态数组表示  也可以使用链表  如果每个桶使用静态数组，那么每个桶都需要nums.size()的大小因为事先不知道数据的分布  
+        // 注意下面加1是防止k为0
+        //int k = nums.size() / 3 + 1; // 桶数
+        int k = 10; // 桶数
+        vector<vector<int>> buckets(k); 
+        int interval = (maxValue - minValue) / k + 1;   // 每个桶的数据范围大小 间隔
+        // 将数据分发到每个桶
+        for(int i = 0; i < nums.size(); ++i) {
+            int index = (nums[i] - minValue) / interval;
+            buckets[index].push_back(nums[i]);
+        }   
+        // 桶内排序
+        for(int i = 0; i < buckets.size(); ++i) {
+            sort(buckets[i].begin(), buckets[i].end());
+        }    
+        // 从各个桶中依次取数放回原数组  
+        int index = 0;
+        for(int i = 0; i < buckets.size(); ++i) {
+            for(int num : buckets[i]) {
+                nums[index++] = num;
+            }
+        }
+        return nums;  
+    }      
+};
+```
 
 
 
