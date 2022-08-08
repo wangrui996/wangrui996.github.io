@@ -8,8 +8,10 @@
 
 * [一个vector赋值给另一个vector](#一个vector赋值给另一个vector)  
 
-
 * [vector的clear](#vector的clear) 
+
+* [vector使用注意事项](vector使用注意事项)
+
 
 ## vector 和 list 的区别  
 
@@ -232,6 +234,14 @@ vec capacity：100  vec size: 100
 ## vector的clear  
 
 * vector的clear作用 : **把size设置成0，capacity不变。**, 并不是把数组元素清0  
+
+
+<p id="vector使用注意事项"></p>      	
+		
+## vector使用注意事项  
+
+![2022-08-08 15-58-03 的屏幕截图](https://user-images.githubusercontent.com/58176267/183368850-c742c24a-ef0d-434b-93c2-8f822041979a.png)  
+
 
 
 
