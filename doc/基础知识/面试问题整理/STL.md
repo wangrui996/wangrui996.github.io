@@ -8,6 +8,9 @@
 
 * [一个vector赋值给另一个vector](#一个vector赋值给另一个vector)  
 
+
+* [vector的clear](#vector的clear) 
+
 ## vector 和 list 的区别  
 
 ### vector
@@ -222,5 +225,13 @@ vec capacity：100  vec size: 100
 * 注意swap是交换，会交换两个数组元素 
 
 ![image](https://user-images.githubusercontent.com/58176267/183253000-581dbfbd-6e20-4c85-9dc0-138847d6b122.png)
+
+
+<p id="vector的clear"></p>      	
+		
+## vector的clear  
+
+* vector的clear作用 : **把size设置成0，capacity不变。**, 并不是把数组元素清0  
+
 
 
