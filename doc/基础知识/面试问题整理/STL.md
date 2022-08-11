@@ -14,6 +14,10 @@
 
 * [模板的全特化和偏特化](#模板的全特化和偏特化)
 
+* [STL的set怎样存储自定义数据类型](#STL的set怎样存储自定义数据类型)  
+
+
+
 
 ## vector 和 list 的区别  
 
@@ -263,3 +267,10 @@ class Person<TP*> {
 .....
 };
 ```
+
+
+<p id="STL的set怎样存储自定义数据类型"></p>      	
+		
+## STL的set怎样存储自定义数据类型  
+
+[STL的set怎样存储自定义数据类型](https://blog.csdn.net/qq_33242956/article/details/122133448)  
