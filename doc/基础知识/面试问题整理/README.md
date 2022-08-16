@@ -1,5 +1,9 @@
 # 面试问题准备  
 
+[嵌入式](https://www.nowcoder.com/discuss/1014401?type=all&order=recall&pos=&page=1&ncTraceId=&channel=-1&source_id=search_all_nctrack&gio_id=958A206FC2CC5E6822CB1B191650D6C2-1660647873138)
+
+[C++](https://www.nowcoder.com/discuss/1015304?type=2&channel=-1&source_id=discuss_terminal_discuss_hot_nctrack#2)
+
 
 ## 操作系统  
 
