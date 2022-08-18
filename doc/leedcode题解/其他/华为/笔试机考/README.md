@@ -3,7 +3,7 @@
 
 [牛客华为题目](https://www.nowcoder.com/exam/oj/ta?tpId=37)  
 
-
+[力扣200题](https://www.nowcoder.com/discuss/828230?channel=-1&source_id=discuss_tag_discuss_hot_nctrack&page=2)
 
 # 5.18机考  
 
