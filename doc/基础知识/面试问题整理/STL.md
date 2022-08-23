@@ -16,7 +16,7 @@
 
 * [STL的set怎样存储自定义数据类型](#STL的set怎样存储自定义数据类型)  
 
-
+* [string类型的s+=f()与s=s+f()的区别](#string类型的s+=f()与s=s+f()的区别)  
 
 
 ## vector 和 list 的区别  
@@ -274,3 +274,13 @@ class Person<TP*> {
 ## STL的set怎样存储自定义数据类型  
 
 [STL的set怎样存储自定义数据类型](https://blog.csdn.net/qq_33242956/article/details/122133448)  
+
+
+
+<p id="string类型的s+=f()与s=s+f()的区别"></p>      	
+		
+## string类型的s+=f()与s=s+f()的区别  
+
+* s += f() 实际上相等于 s.push_back(f()) 与vector类似，一次操作的均摊时间复杂度可看成是O(1)，所以如果是循环操作，时间复杂度可看成是O(N)
+* s = s + f()  有两次拷贝，一是s + f()相当于上面的操作，然后执行重载的赋值运算符，又会产生一次拷贝(把右边的内容一个一个拷贝给s)   再加上一个循环，相当于O(N^2)  
+
