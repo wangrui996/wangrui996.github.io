@@ -4,6 +4,12 @@
 
 注意：gdb主要调试逻辑错误，不检查语法错误(gcc编译时检查的)  
 
+[GDB详细介绍](http://c.biancheng.net/view/8199.html)
+
+
+![image](https://user-images.githubusercontent.com/58176267/186562477-a215b4be-2b79-44a5-8602-063ebae29ceb.png)
+
+
 
 ## 基本指令  
 
