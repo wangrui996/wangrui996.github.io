@@ -12,6 +12,8 @@
 
 [grep基本用法](https://baijiahao.baidu.com/s?id=1731545089327205615&wfr=spider&for=pc)  
 
+[grep](https://www.cnblogs.com/HOsystem/p/16217517.html)
+
 
 <p id="静态库与动态库的制作"></p>      	
 		
