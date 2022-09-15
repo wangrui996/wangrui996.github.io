@@ -20,6 +20,8 @@
 
 * [string类型的s+=f()与s=s+f()的区别](#string类型的s+=f()与s=s+f()的区别)  
 
+* [迭代器失效问题](#迭代器失效问题)  
+
 
 ## vector 和 list 的区别  
 
@@ -293,5 +295,16 @@ class Person<TP*> {
 ## vector扩容1.5和2倍区别
 
 [vector扩容1.5和2倍区别](https://blog.csdn.net/qq_44918090/article/details/120583540)
+
+
+<p id="迭代器失效问题"></p>      	
+		
+## 迭代器失效问题
+
+[迭代器失效问题](https://blog.csdn.net/sukiki09/article/details/122791318)  
+
+[迭代器失效问题及解决方法](https://blog.csdn.net/qq_36131611/article/details/118103158)
+
+
 
 
