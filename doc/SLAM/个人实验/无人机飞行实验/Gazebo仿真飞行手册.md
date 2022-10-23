@@ -20,7 +20,7 @@ bash vins.sh
 * 3.检查里程计话题是否正常  
 
 ```shell
-rostopic echo rostopic echo /vins_estimator_gpu/imu_propagate
+rostopic echo /vins_estimator_gpu/imu_propagate
 ```
 
 
