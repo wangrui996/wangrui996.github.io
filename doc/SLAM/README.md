@@ -32,7 +32,7 @@
 **个人成果**  
 
 
-
+[VINS后续研究](https://zhuanlan.zhihu.com/p/497942945)
 
 
 **致谢**
